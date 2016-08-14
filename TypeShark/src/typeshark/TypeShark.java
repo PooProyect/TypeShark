@@ -7,11 +7,9 @@
 package typeshark;
 
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
+import static javafx.application.Application.launch;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 /**
@@ -22,20 +20,9 @@ public class TypeShark extends Application {
     
     @Override
     public void start(Stage primaryStage) {
-        Button btn = new Button();
-        btn.setText("Say 'Hello World'");
-        btn.setOnAction(new EventHandler<ActionEvent>() {
-            
-            @Override
-            public void handle(ActionEvent event) {
-                System.out.println("Hello World!");
-            }
-        });
+        Organizer pane = new Organizer(5);
         
-        StackPane root = new StackPane();
-        root.getChildren().add(btn);
-        
-        Scene scene = new Scene(root, 300, 250);
+        Scene scene = new Scene(pane.getRoot(), 700, 500, Color.ALICEBLUE);
         
         primaryStage.setTitle("Hello World!");
         primaryStage.setScene(scene);
@@ -48,5 +35,6 @@ public class TypeShark extends Application {
     public static void main(String[] args) {
         launch(args);
     }
+    
     
 }

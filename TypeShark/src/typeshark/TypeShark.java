@@ -20,11 +20,9 @@ public class TypeShark extends Application {
     
     @Override
     public void start(Stage primaryStage) {
-        Organizer pane = new Organizer();
+        Organizer pane = new MenuOrganizer();
+        Scene scene = new Scene(pane.getRoot(), Constantes.DIMENSION_SCENE_X, Constantes.DIMENSION_SCENE_Y, Color.ALICEBLUE);primaryStage.setTitle("TypeShark");
         
-        Scene scene = new Scene(pane.getRoot(), Constantes.DIMENSION_SCENE_X, Constantes.DIMENSION_SCENE_Y, Color.ALICEBLUE);
-        
-        primaryStage.setTitle("TypeShark");
         primaryStage.setScene(scene);
         primaryStage.show();
     }

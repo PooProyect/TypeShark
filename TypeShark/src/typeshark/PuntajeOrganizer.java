@@ -5,6 +5,7 @@
  */
 package typeshark;
 
+import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 
 /**
@@ -15,6 +16,7 @@ public class PuntajeOrganizer extends Organizer{
     PuntajeOrganizer(){
         
         root=new VBox();
+        root.getChildren().add(new Button("yolo"));
     }
     
 }

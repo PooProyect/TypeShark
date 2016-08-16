@@ -10,6 +10,6 @@ package typeshark;
  * @author Andres
  */
 public class Constantes {
-    public static final int DIMENSION_SCENE_X=700;
-    public static final int DIMENSION_SCENE_Y=500;
+    public static final int DIMENSION_SCENE_X=400;
+    public static final int DIMENSION_SCENE_Y=300;
 }

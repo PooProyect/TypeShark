@@ -7,6 +7,7 @@ package typeshark;
 
 import java.util.*;
 import javafx.event.*;
+import javafx.scene.Scene;
 import javafx.scene.layout.*;
 import javafx.scene.control.*;
 import javafx.scene.paint.Color;
@@ -16,15 +17,17 @@ import javafx.scene.paint.Color;
  *
  * @author fabkm
  */
-public class Organizer {
+public abstract class Organizer {
    Pane root;
    // private Tiburon tiburon;
    // private Set<Tiburon> tiburones;
     //private int cantTiburones;
-    
+    Scene scene;
     public Organizer(){
+        
         root=new Pane();
-     //   root = new BorderPane();
+        setScene();
+//   root = new BorderPane();
       //  this.cantTiburones = cantidad;
       //  this.tiburones =  new HashSet<Tiburon>();
       //  Button btn = new Button("start");
@@ -36,7 +39,14 @@ public class Organizer {
     }
     
     public Pane getRoot(){
+        root.setFocusTraversable(true);
         return root;
+    }
+    public Scene getScene(){
+        return scene;
+    }
+    public void setScene(){
+        scene=new Scene(root,300,300);
     }
     /*
     private void crearTiburones(int cant){

@@ -5,18 +5,53 @@
  */
 package typeshark;
 
+import javafx.event.EventHandler;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
-import javafx.scene.layout.VBox;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+
 
 /**
  *
  * @author Andres
  */
 public class PuntajeOrganizer extends Organizer{
+    private Button reiniciar,volver;
     PuntajeOrganizer(){
         
-        root=new VBox();
-        root.getChildren().add(new Button("yolo"));
+        root=new BorderPane();
+        colocarBotones();
+        
     }
-    
+    private void colocarBotones(){
+        reiniciar=new Button("reiniciar");
+        volver=new Button("volver");
+        HBox bottom=new HBox();
+        bottom.getChildren().addAll(reiniciar,volver);
+        bottom.setAlignment(Pos.CENTER);
+        bottom.setSpacing(Constantes.DIMENSION_SCENE_X*.2);
+        ((BorderPane)root).setBottom(bottom);
+        reiniciar.setOnMouseClicked(new ClickHandler(true));
+        volver.setOnMouseClicked(new ClickHandler(false));
+    }
+    private class ClickHandler implements EventHandler<MouseEvent>{
+        boolean b;
+        ClickHandler(boolean b){
+            this.b=b;
+        }
+
+        @Override
+        public void handle(MouseEvent t) {
+            if(b){
+                
+            }else{
+                root=(new MenuOrganizer()).getRoot();
+                cambiarPantalla(t);
+            }
+            //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+        
+    }
 }

@@ -7,10 +7,12 @@ package typeshark;
 
 import java.util.*;
 import javafx.event.*;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.layout.*;
 import javafx.scene.control.*;
 import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 
 
 /**
@@ -42,11 +44,15 @@ public abstract class Organizer {
         root.setFocusTraversable(true);
         return root;
     }
-    public Scene getScene(){
-        return scene;
+    //metodo a agregar al diagrama de clases
+    public void cambiarPantalla(Event t){
+          Stage stage=new Stage();
+                     stage=(Stage) ((Node)t.getSource()).getScene().getWindow();
+                    setScene();
+                    stage.setScene(scene);
     }
     public void setScene(){
-        scene=new Scene(root,300,300);
+        scene=new Scene(root,Constantes.DIMENSION_SCENE_X,Constantes.DIMENSION_SCENE_Y);
     }
     /*
     private void crearTiburones(int cant){

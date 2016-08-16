@@ -13,27 +13,25 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.ArcType;
 
 /**
- *
+ *clase runnable que genera un canvas(figurilla tiburon)
  * @author fabkm
  */
-public class Tiburon implements Runnable{
-    private Canvas tiburon;
+public class Tiburon extends Pez implements Runnable {
     
-    public Tiburon(double xMove, double yMove){
-        tiburon = new Canvas(160,85);
-        this.diseñarTiburon();
+    
+    public Tiburon(double xMove, double yMove,Color c){
+        Pez = new Canvas(160,85);
+        this.diseñarTiburon(c);
         this.moveTiburon(xMove, yMove);    // getLayoutX() + x    --> 270 + 430
     }
 
-    Tiburon() {
-        tiburon = new Canvas();
-    }
+/*
     
     public Node getCanvas(){
         return tiburon;
-    }
+    }*/
     
-    private void diseñarTiburon(){
+    private void diseñarTiburon(Color c){
         double xPoints[] = {50,70,75};
         double yPoints[] = {31,11,31};
         double xAleta[] = {40,55,60};
@@ -46,10 +44,11 @@ public class Tiburon implements Runnable{
         double xInf[] = {110,125,118};
         double yInf[] = {60,55,73};
         
-        GraphicsContext tibu = tiburon.getGraphicsContext2D();
-        tibu.strokeText("Tiburon",10,10);
+        GraphicsContext tibu = Pez.getGraphicsContext2D();
         
-        tibu.setFill(Color.LIGHTBLUE);
+        //tibu.strokeText("Tiburon",10,10);
+        
+        tibu.setFill(c);
         //tibu.fillArc(x, y, w, h, startAngle, arcExtent, ArcType.CHORD);
         tibu.fillArc(5, 35,134,47,0,180,ArcType.ROUND);
         tibu.fillArc(5, 35,134,30, 0, -180, ArcType.ROUND);
@@ -71,8 +70,8 @@ public class Tiburon implements Runnable{
     }
     
     private void moveTiburon(double x, double y){
-        tiburon.setTranslateX(x);     
-        tiburon.setTranslateY(y);
+        Pez.setTranslateX(x);     
+       Pez.setTranslateY(y);
     }
 
     @Override
@@ -84,7 +83,7 @@ public class Tiburon implements Runnable{
 
                 @Override
                 public void run() {
-                    this.moveTiburon(tiburon.getTranslateX()-distancia, tiburon.getTranslateY());
+                    this.moveTiburon(Pez.getTranslateX()-distancia,Pez.getTranslateY());
                 }
 
                 private void moveTiburon(double d, double d0) {

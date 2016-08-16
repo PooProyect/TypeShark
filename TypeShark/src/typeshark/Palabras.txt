@@ -1,0 +1,13 @@
+word
+hello
+house
+green
+blue
+red
+bed
+mouse
+key
+berry
+stardust
+color
+world

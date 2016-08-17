@@ -16,7 +16,7 @@ import javafx.scene.shape.ArcType;
  *clase runnable que genera un canvas(figurilla tiburon)
  * @author fabkm
  */
-public class Tiburon extends Pez implements Runnable {
+public class Tiburon extends Pez {
     
     
     public Tiburon(double xMove, double yMove,Color c){

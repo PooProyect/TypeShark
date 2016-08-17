@@ -20,14 +20,14 @@ import javafx.stage.Stage;
  * @author fabkm
  */
 public abstract class Organizer {
-   Pane root;
+    Pane root;
    // private Tiburon tiburon;
    // private Set<Tiburon> tiburones;
     //private int cantTiburones;
     Scene scene;
     public Organizer(){
         
-        root=new Pane();
+        root=new BorderPane();
         setScene();
 //   root = new BorderPane();
       //  this.cantTiburones = cantidad;

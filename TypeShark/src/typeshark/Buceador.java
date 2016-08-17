@@ -20,7 +20,11 @@ public class Buceador implements Runnable {
     private String nombre;
     private Node buceador;
     public Buceador(){
+        //aun no esta la imagen
         buceador=new Canvas();
+        vidas=3;
+        puntuacion=0;
+        
     }
     @Override
     public void run() {
@@ -29,12 +33,22 @@ public class Buceador implements Runnable {
     public int getVidas(){
         return vidas;
     }
+    public void aumentarVida(){
+        vidas++;
+    }
     public int getPunt(){
         return puntuacion;
     }
     public Node getBuceador(){
         return buceador;
     }
+    public void añadirPuntaje(int valor){
+        puntuacion+=valor;
+    }
+    public void restarVida(){
+        vidas--;
+    }
+    
     public void grabarPuntuacion(){
         try{
             FileWriter lector=new FileWriter("Puntuaciones.txt");

@@ -27,8 +27,10 @@ import javafx.stage.Stage;
 public class MenuOrganizer extends Organizer{
     private Button empezar,salir,puntaje;
     private Text title;
+    private Buceador buceador;
     
     MenuOrganizer(){
+        buceador=new Buceador();
         root=new Pane();
         
         generarMenu();
@@ -67,11 +69,11 @@ public class MenuOrganizer extends Organizer{
             
             switch(opcion){
                 case 1:{
-                    
-                    root=(new GameOrganizer()).getRoot();//throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                   
+                    root=(new GameOrganizer(buceador,1000)).getRoot();//throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
                     cambiarPantalla(t);
                     
-                    
+                
                 }break;
                 case 2:{root=(new PuntajeOrganizer()).getRoot();
                        cambiarPantalla(t);
@@ -86,6 +88,13 @@ public class MenuOrganizer extends Organizer{
           
             t.consume();
 //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+        
+    }
+    private class DificultOrganizer{
+        
+        DificultOrganizer(){
+            
         }
         
     }

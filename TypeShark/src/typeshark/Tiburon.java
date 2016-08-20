@@ -5,10 +5,13 @@
  */
 package typeshark;
 
+import java.util.ArrayList;
 import java.util.logging.*;
 import javafx.application.Platform;
 import javafx.scene.Node;
 import javafx.scene.canvas.*;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.ArcType;
 
@@ -17,21 +20,35 @@ import javafx.scene.shape.ArcType;
  * @author fabkm
  */
 public class Tiburon extends Pez {
+   private HBox contenedor;
     
-    
-    public Tiburon(double xMove, double yMove,Color c){
+    public Tiburon(double xMove, double yMove){
         Pez = new Canvas(160,85);
-        this.diseñarTiburon(c);
+        this.diseñarTiburon();
         this.moveTiburon(xMove, yMove);    // getLayoutX() + x    --> 270 + 430
     }
 
-/*
+    public Tiburon(ArrayList<String> lista){
+            Pez=new Canvas(160,85);
+            this.diseñarTiburon();
+            this.typePez(lista);
+    }
+    private void typePez(ArrayList<String> lista){
+        contenedor=new HBox();
+        LabelColor type=new LabelColor(lista);
+        
+       // contenedor.getChildren().add(Pez);
+        
+      //  type.getNode().setLayoutX(type.getNode().getLayoutX()+20);
+     //   type.getNode().setLayoutY(type.getNode().getLayoutY()+20);
+    }
     
-    public Node getCanvas(){
-        return tiburon;
-    }*/
     
-    private void diseñarTiburon(Color c){
+    
+    public Node getTypePez(){
+        return Pez;
+    }
+    private void diseñarTiburon(){
         double xPoints[] = {50,70,75};
         double yPoints[] = {31,11,31};
         double xAleta[] = {40,55,60};
@@ -48,7 +65,7 @@ public class Tiburon extends Pez {
         
         //tibu.strokeText("Tiburon",10,10);
         
-        tibu.setFill(c);
+        tibu.setFill(Color.LIGHTBLUE);
         //tibu.fillArc(x, y, w, h, startAngle, arcExtent, ArcType.CHORD);
         tibu.fillArc(5, 35,134,47,0,180,ArcType.ROUND);
         tibu.fillArc(5, 35,134,30, 0, -180, ArcType.ROUND);

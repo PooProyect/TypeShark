@@ -5,9 +5,12 @@
  */
 package typeshark;
 
+import java.util.ArrayList;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
+import javafx.event.EventType;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
@@ -20,38 +23,41 @@ import javafx.scene.paint.Color;
  */
 public class LabelColor{
     private HBox contenedor;
-   
+    private ArrayList<String> lista;
     private Label label1,label2;
    
-
+ 
     LabelColor(String c){
-      
+    lista=new ArrayList(); 
     contenedor=new HBox(); 
-   
-    generarLabel(c);
+    lista.add(c);
+    generarLabel(lista);
      
     }
-    private void generarLabel(String c){
+       LabelColor(ArrayList<String> lista){
+        contenedor=new HBox();
+        this.lista=lista;
+        generarLabel(lista);
+        
+    }
+    
+    private void generarLabel(ArrayList<String> lista){
       
         label1=new Label();
-        label2=new Label(c);
-        label1.setTextFill(Color.RED);
-
+        label2=new Label(lista.get(0));
+        label2.setTextFill(Color.WHITE);
+        label1.setTextFill(Color.ORANGE);
         contenedor.getChildren().addAll(label1,label2);
         contenedor.setAlignment(Pos.CENTER);
        Platform.runLater(new Runnable(){
-           
-            @Override
+       @Override
             public void run() {
                 contenedor.setFocusTraversable(true);
-                    contenedor.addEventFilter(KeyEvent.KEY_TYPED,new KeyHandler());
+                contenedor.addEventFilter(KeyEvent.KEY_TYPED,new KeyHandler());
             }
            
        });
-       
-   
-
-        
+  
     }
     private class KeyHandler implements EventHandler<KeyEvent>{
 
@@ -63,14 +69,19 @@ public class LabelColor{
             if(t.getCharacter().trim().charAt(0)==label2.getText().trim().charAt(0)&&label2.getText().length()>0){
                 label1.setText(label1.getText().trim()+label2.getText().trim().charAt(0));
                 label2.setText(label2.getText().substring(1).trim());
-               //  if(label2.getText().trim().length()==0) Platform.exit();
-                
-                //solo es usable para el tiburon negro
-                /*if(label2.getText().trim().length()==0){
-                    label1.setText("");
-                    label2.setText("yolo");
-                }*/
-                    //if interno digamos para que se elimite o se restaure las propiedades del tiburon
+             
+                if(label2.getText().trim().length()==0){
+                    lista.remove(label1.getText().trim());
+                    if(!lista.isEmpty()){
+                          label1.setText("");
+                    label2.setText(""+lista.get(0));
+                    }else{
+                        //no se que colocar xD
+                    }
+                  
+                }
+                    
+                            
             }
        t.consume();
             //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -78,8 +89,8 @@ public class LabelColor{
         
     }
     
-    Pane getNode(){
-        return contenedor;
+   public  Node  getNode(){
+        return (Node)contenedor;
         
     }
 }

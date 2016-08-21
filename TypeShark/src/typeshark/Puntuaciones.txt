@@ -1,3 +1,0 @@
-500000,bryan
-300000,david
-100000,andres

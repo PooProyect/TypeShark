@@ -7,18 +7,28 @@ package typeshark;
 
 import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
-
+import graphics.*;
 /**
  *
  * @author Andres
  */
 public abstract class Pez implements Runnable{
-    Canvas Pez;
-    Pez(){
-        Pez=new Canvas();
+    Node pez;
+    
+    public Pez(double x, double y){
+        pez=new Canvas();
+        this.movePez(x, y);
     }
-    Node getCanvas(){
-        return Pez;
+    public Node getPez(){
+        return pez;
     }
     
+    private void movePez(double x, double y){
+        pez.setTranslateX(x);     
+        pez.setTranslateY(y);
+    }
+    
+    public void move(double x,double y){
+        this.movePez(x, y);
+    }
 }

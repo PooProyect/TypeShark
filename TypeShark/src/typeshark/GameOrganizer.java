@@ -40,9 +40,10 @@ public class GameOrganizer extends Organizer{
         ArrayList<String>list =new ArrayList();
         list.add("aaaa");
         list.add("BBBBsads");
-        Tiburon t=new Tiburon(100,100,(new TiburonG()).getTiburon(),list);
-        ((BorderPane)root).setCenter(t.getPez());
-        //root.getChildren().add(t.getTypePez());
+        Tiburon t=new Tiburon(100,100,list);
+        Pirana p = new Pirana(100,100,list);
+        //((BorderPane)root).setCenter(t.getPez());
+        root.getChildren().addAll(t.getPez(),p.getPez());
         /*t.getTypePez().setScaleX(Constantes.DIMENSION_SCENE_X-30);
         t.getTypePez().setScaleY(Constantes.DIMENSION_SCENE_Y-30);*/
         Thread tibu=new Thread(t);

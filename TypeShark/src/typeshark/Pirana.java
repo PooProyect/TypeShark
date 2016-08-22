@@ -6,7 +6,7 @@
 package typeshark;
 
 import graphics.PiranhaG;
-//import graphics.TiburonG;
+import graphics.TiburonG;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -20,17 +20,15 @@ import javafx.scene.layout.HBox;
  */
 public class Pirana extends Pez{
     private HBox contenedor;
-    private PiranhaG pirana; 
+    //private PiranhaG pirana; 
    
-    public Pirana(double xMove, double yMove){
-        super(xMove,yMove);
-        pirana = new PiranhaG();
-        pez = pirana.getPiranha();
-        
+    public Pirana(double xMove, double yMove,Node pez){
+        super(pez);
+        super.move(xMove, yMove);
     }
 
     public Pirana(double x, double y, ArrayList<String> lista){
-        this(x,y);
+        this(x,y,(new PiranhaG()).getPiranha());
         this.typePez(lista);
     }
     

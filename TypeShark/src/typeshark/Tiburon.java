@@ -25,16 +25,20 @@ public class Tiburon extends Pez {
    //private TiburonG tiburon; 
    
     public Tiburon(double xMove, double yMove, Node pez){
-        super(xMove,yMove);
-        this.pez = pez;
+        super(pez);    // 1º paso el nodo del Canvas (dibujo del Tiburon)
+        super.move(xMove, yMove);  // 2º se mueve el nodo a posicion especifica (de inicio)
         
     }
 
-    public Tiburon(double x, double y, Node pez, ArrayList<String> lista){
-        this(x,y,pez);
+    public Tiburon(double x, double y,  ArrayList<String> lista){
+        this(x,y,(new TiburonG()).getTiburon());
         this.typePez(lista);
     }
     
+    public Tiburon(double x, double y, Node pez,  ArrayList<String> lista){
+        this(x,y,pez);
+        this.typePez(lista);
+    }
     private void typePez(ArrayList<String> lista){
         contenedor=new HBox();
         LabelColor type=new LabelColor(lista);
@@ -59,7 +63,7 @@ public class Tiburon extends Pez {
                 
             });
             try {
-                Thread.sleep(10);
+                Thread.sleep(100);
             } catch (InterruptedException ex) {
                 Logger.getLogger(Tiburon.class.getName()).log(Level.SEVERE, null, ex);
             }

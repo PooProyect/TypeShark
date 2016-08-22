@@ -15,8 +15,8 @@ import javafx.scene.Node;
  */
 public class TiburonNegro extends Tiburon{
     private int numPalabras;
-    public TiburonNegro(double x, double y, Node pez, ArrayList<String> lista) {
-        super(x, y, pez, lista);
+    public TiburonNegro(double x, double y, ArrayList<String> lista) {
+        super(x, y, (new TiburonNegroG()).getTiburonNegro(), lista);
         this.numPalabras = (int) Math.floor((Math.random()+2));
     }
     

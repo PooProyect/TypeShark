@@ -6,8 +6,7 @@
 package typeshark;
 
 import javafx.scene.Node;
-import javafx.scene.canvas.Canvas;
-import graphics.*;
+
 /**
  *
  * @author Andres
@@ -15,9 +14,9 @@ import graphics.*;
 public abstract class Pez implements Runnable{
     Node pez;
     
-    public Pez(double x, double y){
-        pez=new Canvas();
-        this.movePez(x, y);
+    public Pez(Node pez){    // todo Pez recibe un Node (en las clases hijas recibirá el node del canvas de cada dibujo)
+        this.pez= pez;
+        //this.movePez(x, y);
     }
     public Node getPez(){
         return pez;

@@ -13,21 +13,30 @@ import javafx.scene.Node;
  */
 public abstract class Pez implements Runnable{
     Node pez;
+    LabelColor label;
     
-    public Pez(Node pez){    // todo Pez recibe un Node (en las clases hijas recibirá el node del canvas de cada dibujo)
+    public Pez(Node pez, LabelColor label){    // todo Pez recibe un Node (en las clases hijas recibirá el node del canvas de cada dibujo)
         this.pez= pez;
-        //this.movePez(x, y);
+        this.label = label;
     }
     public Node getPez(){
         return pez;
     }
     
+    public Node getLabel(){
+        return label.getNode();
+    }
+    
     private void movePez(double x, double y){
         pez.setTranslateX(x);     
         pez.setTranslateY(y);
+        label.getNode().setTranslateX(x);
+        label.getNode().setTranslateY(y);
     }
     
     public void move(double x,double y){
         this.movePez(x, y);
     }
+    
+    
 }

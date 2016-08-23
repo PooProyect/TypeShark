@@ -25,37 +25,37 @@ public class Tiburon extends Pez {
    //private int numPalabras;
    //private TiburonG tiburon; 
    
-    public Tiburon(double xMove, double yMove, Node pez){
-        super(pez);    // 1º paso el nodo del Canvas (dibujo del Tiburon)
+    public Tiburon(double xMove, double yMove, Node pez, LabelColor label){
+        super(pez,label);    // 1º paso el nodo del Canvas (dibujo del Tiburon)
         super.move(xMove, yMove);  // 2º se mueve el nodo a posicion especifica (de inicio)
         
     }
 
-    public Tiburon(double x, double y,Color color,  ArrayList<String> lista){
-        this(x,y,(new TiburonG(color)).getTiburon());
-        /*while(lista !=  null){
-            this.typePez(lista);       // tuve problemas con este linea
-        }*/
-    }
-    
-    public Tiburon(double x, double y,Node pez,  ArrayList<String> lista){
-        this(x,y,pez);
-        /*while(lista !=  null){
-            this.typePez(lista);
-        }*/
-    }
-   
-    private void typePez(ArrayList<String> lista){
-        contenedor=new HBox();
-        while(lista != null){
-            LabelColor type=new LabelColor(lista);
+    public Tiburon(double x, double y,Color color,  LabelColor label){
+        this(x,y,(new TiburonG(color)).getTiburon(), label);
+        try{
+            this.typePez(label);       // tuve problemas con este linea
+        }catch(NullPointerException e){
+            
         }
+        
+    }
+    
+    /**
+     *
+     * @param x
+     * @param y
+     * @param pez
+     * @param label
+     */
+    
+   
+    private void typePez(LabelColor label){
+        
     }
     
     
-    public Node getTypePez(){
-        return pez;
-    }
+    
     
     @Override
     public void run() {
@@ -76,4 +76,6 @@ public class Tiburon extends Pez {
             }
         }
     }
+    
+   
 }

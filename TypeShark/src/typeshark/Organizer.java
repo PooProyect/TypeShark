@@ -51,6 +51,10 @@ public abstract class Organizer {
                     setScene();
                     stage.setScene(scene);
     }
+
+    /**
+     *
+     */
     public void setScene(){
         scene=new Scene(root,Constantes.DIMENSION_SCENE_X,Constantes.DIMENSION_SCENE_Y);
     }

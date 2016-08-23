@@ -10,6 +10,7 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
@@ -61,7 +62,7 @@ public class MenuOrganizer extends Organizer{
         menu.setLayoutY(Constantes.DIMENSION_SCENE_Y*.4);*/
         menu.setSpacing(Constantes.DIMENSION_SCENE_Y*.08);
         
-        ((BorderPane) root).setRight((new Tiburon(-30,80,Color.AQUA,null)).getPez());
+        //((BorderPane) root).setRight((new Tiburon(-30,80,Color.AQUA,null)).getPez());
         empezar.setOnMouseClicked(new ClickHandler(1));
         puntaje.setOnMouseClicked(new ClickHandler(2));
         salir.setOnMouseClicked(new ClickHandler(3));
@@ -105,5 +106,11 @@ public class MenuOrganizer extends Organizer{
             
         }
         
+    }
+    
+    
+     @Override
+    public void setScene(){
+        scene = new Scene(root, Constantes.DIMENSION_GAME_X,Constantes.DIMENSION_GAME_Y);
     }
 }

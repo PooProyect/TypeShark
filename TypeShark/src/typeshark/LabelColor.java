@@ -45,7 +45,7 @@ public class LabelColor{
       
         label1=new Label();
         label2=new Label(lista.get(0));
-        label2.setTextFill(Color.WHITE);
+        label2.setTextFill(Color.BLACK);
         label1.setTextFill(Color.ORANGE);
         contenedor.getChildren().addAll(label1,label2);
         contenedor.setAlignment(Pos.CENTER);

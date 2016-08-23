@@ -12,4 +12,8 @@ package typeshark;
 public class Constantes {
     public static final int DIMENSION_SCENE_X=400;
     public static final int DIMENSION_SCENE_Y=300;
+    public static final int DIMENSION_GAME_X = 700;
+    public static final int DIMENSION_GAME_Y = 500;
+    public static final int DIMENSION_PUNTAJE_X = 400;
+    public static final int DIMENSION_PUNTAJE_Y = 300;
 }

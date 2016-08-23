@@ -8,8 +8,10 @@ package typeshark;
 import graphics.*;
 import java.util.ArrayList;
 import javafx.application.Platform;
+import javafx.event.Event;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.scene.layout.HBox;
@@ -23,6 +25,7 @@ public class GameOrganizer extends Organizer{
 
      Buceador buceador;
     int timeDificult;
+    
     GameOrganizer(Buceador buceador, int timeDificult){
         root=new BorderPane();
         this.buceador=buceador;
@@ -41,37 +44,38 @@ public class GameOrganizer extends Organizer{
     
     private void añadirPeces(){
         FlowPane flow = new FlowPane(Orientation.VERTICAL);
-        FondoMarino fondo = new FondoMarino(Constantes.DIMENSION_SCENE_X,Constantes.DIMENSION_SCENE_Y);  // extra
+        FondoMarino fondo = new FondoMarino(Constantes.DIMENSION_GAME_X,Constantes.DIMENSION_GAME_Y);  // extra
         StackPane stack;
         Tiburon t;
-        Label l;                                      // Label tambien debe hacer TranslateX  y TranslateY para moverse con el pez
-        ArrayList<String>list =new ArrayList();
+        LabelColor labelC;
+        
+        //Label l;                                      // Label tambien debe hacer TranslateX  y TranslateY para moverse con el pez
+        /*ArrayList<String>list =new ArrayList();
         list.add("aaaa");
         list.add("BBBBsads");
-        list.add("abbbccc");
+        list.add("abbbccc");*/
         ((FlowPane) flow).setVgap(10);
         root.getChildren().add(fondo.getFondoMarino());  // extra: FondoMarino   no se ve el Status??
+        Thread hilo;
         for(int i=0;i<3;i++){
             stack = new StackPane();
-            t = new Tiburon(200,0,Color.ALICEBLUE,list); // 200
-            l = new Label(list.get(i));           // por ahora usé los string de la lista
-            l.setTranslateX(200);        // 200
+            labelC = new LabelColor("abc"+1);
+            t = new Tiburon(500,0,Color.ALICEBLUE,labelC); // 200
+            //l = new Label(list.get(i));           // por ahora usé los string de la lista
+            //l.setTranslateX(500);        // 200
+            
             stack.setAlignment(Pos.CENTER);
             
-            stack.getChildren().addAll(t.getPez(),l);
+            stack.getChildren().addAll(t.getPez(),t.getLabel());
             ((FlowPane) flow).getChildren().add(stack);
+            hilo = new Thread(t);
+            hilo.start();
+            
+            
         }
         
         
-        //Pirana p = new Pirana(100,100,Color.ALICEBLUE, list);
-        //((FlowPane) flow).getChildren().add(p.getPez());
-        
-        ((BorderPane) root).setCenter(flow);
-        
-        
-        /*t.getTypePez().setScaleX(Constantes.DIMENSION_SCENE_X-30);
-        t.getTypePez().setScaleY(Constantes.DIMENSION_SCENE_Y-30);*/
-        
+       ((BorderPane) root).setCenter(flow);
         /*Thread tibu=new Thread(t);
         tibu.start();*/
     }
@@ -123,4 +127,11 @@ public class GameOrganizer extends Organizer{
             lSpecial.setText("Special"+buceador.getSpecial());
         }
     }
+    
+     @Override
+    public void cambiarPantalla(Event t){
+        super.cambiarPantalla(t);
+    }
+    
+    
 }

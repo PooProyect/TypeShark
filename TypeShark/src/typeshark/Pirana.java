@@ -23,16 +23,14 @@ public class Pirana extends Pez{
     private HBox contenedor;
     //private PiranhaG pirana; 
    
-    public Pirana(double xMove, double yMove,Node pez){
-        super(pez);
+    public Pirana(double xMove, double yMove,Node pez, LabelColor label){
+        super(pez,label);
         super.move(xMove, yMove);
     }
 
-    public Pirana(double x, double y, Color color, ArrayList<String> lista){
-        this(x,y,(new PiranhaG(color)).getPiranha());
-        while(lista != null){
-            this.typePez(lista);
-        }
+    public Pirana(double x, double y, Color color, LabelColor label){
+        this(x,y,(new PiranhaG(color)).getPiranha(),label);
+        
     }
     
     private void typePez(ArrayList<String> lista){

@@ -13,6 +13,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.scene.layout.HBox;
+import javafx.scene.paint.Color;
 
 /**
  *
@@ -40,6 +41,7 @@ public class GameOrganizer extends Organizer{
     
     private void añadirPeces(){
         FlowPane flow = new FlowPane(Orientation.VERTICAL);
+        FondoMarino fondo = new FondoMarino(Constantes.DIMENSION_SCENE_X,Constantes.DIMENSION_SCENE_Y);  // extra
         StackPane stack;
         Tiburon t;
         Label l;                                      // Label tambien debe hacer TranslateX  y TranslateY para moverse con el pez
@@ -48,9 +50,10 @@ public class GameOrganizer extends Organizer{
         list.add("BBBBsads");
         list.add("abbbccc");
         ((FlowPane) flow).setVgap(10);
+        root.getChildren().add(fondo.getFondoMarino());  // extra: FondoMarino   no se ve el Status??
         for(int i=0;i<3;i++){
             stack = new StackPane();
-            t = new Tiburon(200,0,list); // 200
+            t = new Tiburon(200,0,Color.ALICEBLUE,list); // 200
             l = new Label(list.get(i));           // por ahora usé los string de la lista
             l.setTranslateX(200);        // 200
             stack.setAlignment(Pos.CENTER);
@@ -60,7 +63,7 @@ public class GameOrganizer extends Organizer{
         }
         
         
-        //Pirana p = new Pirana(100,100,list);
+        //Pirana p = new Pirana(100,100,Color.ALICEBLUE, list);
         //((FlowPane) flow).getChildren().add(p.getPez());
         
         ((BorderPane) root).setCenter(flow);

@@ -15,6 +15,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
@@ -26,12 +27,12 @@ import javafx.stage.Stage;
  */
 public class MenuOrganizer extends Organizer{
     private Button empezar,salir,puntaje;
-    private Text title;
+    //private Text title;
     private Buceador buceador;
     
     MenuOrganizer(){
         buceador=new Buceador();
-        root=new Pane();
+        root=new BorderPane();
         
         generarMenu();
         
@@ -40,20 +41,27 @@ public class MenuOrganizer extends Organizer{
     private void generarMenu(){
         VBox menu=new VBox();
         
+       
         empezar=new Button("Empezar");
         puntaje=new Button("Puntaje");
         salir=new Button (" Salir ");
-        title=new Text("TYPERSHARK");
-        title.setFont(Font.font("Ravie",FontWeight.NORMAL,40 ));
-        root.setStyle("-fx-background-color: blue;");
+        Node title=new Text("TYPERSHARK");
+        ((Text) title).setFont(Font.font("Ravie",FontWeight.NORMAL,40 ));
+        root.setStyle("-fx-background-color: aqua;");
         menu.getChildren().addAll(empezar,puntaje,salir);
-        root.getChildren().addAll(title,menu);
+        ((BorderPane) root).setTop(title);      //  getChildren().addAll(title,menu);
+        ((BorderPane) root).setCenter(menu);
+        //title.setLineSpacing(5);
+        title.setTranslateX(20);
+        title.setTranslateY(20);
         menu.setAlignment(Pos.CENTER);
-        title.setLayoutX(Constantes.DIMENSION_SCENE_X*.03);
+        /*title.setLayoutX(Constantes.DIMENSION_SCENE_X*.03);
         title.setLayoutY(Constantes.DIMENSION_SCENE_Y*.2);
         menu.setLayoutX(Constantes.DIMENSION_SCENE_X*.403);
-        menu.setLayoutY(Constantes.DIMENSION_SCENE_Y*.4);
+        menu.setLayoutY(Constantes.DIMENSION_SCENE_Y*.4);*/
         menu.setSpacing(Constantes.DIMENSION_SCENE_Y*.08);
+        
+        ((BorderPane) root).setRight((new Tiburon(-30,80,Color.AQUA,null)).getPez());
         empezar.setOnMouseClicked(new ClickHandler(1));
         puntaje.setOnMouseClicked(new ClickHandler(2));
         salir.setOnMouseClicked(new ClickHandler(3));

@@ -11,6 +11,7 @@ import java.util.logging.*;
 import javafx.application.Platform;
 import javafx.scene.Node;
 import javafx.scene.layout.HBox;
+import javafx.scene.paint.Color;
 
 
 //import graphics.*;
@@ -30,19 +31,25 @@ public class Tiburon extends Pez {
         
     }
 
-    public Tiburon(double x, double y,  ArrayList<String> lista){
-        this(x,y,(new TiburonG()).getTiburon());
-        this.typePez(lista);
+    public Tiburon(double x, double y,Color color,  ArrayList<String> lista){
+        this(x,y,(new TiburonG(color)).getTiburon());
+        /*while(lista !=  null){
+            this.typePez(lista);       // tuve problemas con este linea
+        }*/
     }
     
-    public Tiburon(double x, double y, Node pez,  ArrayList<String> lista){
+    public Tiburon(double x, double y,Node pez,  ArrayList<String> lista){
         this(x,y,pez);
-        this.typePez(lista);
+        /*while(lista !=  null){
+            this.typePez(lista);
+        }*/
     }
+   
     private void typePez(ArrayList<String> lista){
         contenedor=new HBox();
-        LabelColor type=new LabelColor(lista);
-        
+        while(lista != null){
+            LabelColor type=new LabelColor(lista);
+        }
     }
     
     

@@ -17,15 +17,15 @@ import javafx.scene.paint.Color;
 public class PiranhaG {
  private Canvas piranha;
     
-    public PiranhaG(){
+    public PiranhaG(Color color){
         piranha = new Canvas(80,80);
-        this.desingPiranha();
+        this.desingPiranha(color);
         //this.moveTiburon(x, y);
     }
     
     
     
-    private void desingPiranha(){
+    private void desingPiranha(Color color){
         GraphicsContext pira = piranha.getGraphicsContext2D();
         //pira.beginPath();
         double xCola[] = {60,63,75};
@@ -57,8 +57,9 @@ public class PiranhaG {
         
         //pira.fillArc(x, y, w, h, startAngle, arcExtent, ArcType.CHORD);
         //pira.fillArc(5, 40, 30, 30, 50, 0, ArcType.CHORD);
-        pira.setFill(Color.WHITE);
+        pira.setFill(Color.WHITESMOKE);
         pira.fillOval(18, 30, 8, 8);
+        pira.setFill(color);
         pira.fillPolygon(xBoca, yBoca, 3);
         
         pira.setFill(Color.BLACK);

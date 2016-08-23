@@ -11,6 +11,7 @@ import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.paint.Color;
 
 
 /**
@@ -29,10 +30,13 @@ public class PuntajeOrganizer extends Organizer{
         reiniciar=new Button("reiniciar");
         volver=new Button("volver");
         HBox bottom=new HBox();
+        root.setStyle("-fx-background-color: blue;");
+        
         bottom.getChildren().addAll(reiniciar,volver);
         bottom.setAlignment(Pos.CENTER);
         bottom.setSpacing(Constantes.DIMENSION_SCENE_X*.2);
         ((BorderPane)root).setBottom(bottom);
+        ((BorderPane) root).setRight((new Pirana(0,100,Color.BLUE,null)).getPez());
         reiniciar.setOnMouseClicked(new ClickHandler(true));
         volver.setOnMouseClicked(new ClickHandler(false));
     }

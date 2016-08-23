@@ -13,6 +13,7 @@ import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.scene.Node;
 import javafx.scene.layout.HBox;
+import javafx.scene.paint.Color;
 
 /**
  *
@@ -27,15 +28,18 @@ public class Pirana extends Pez{
         super.move(xMove, yMove);
     }
 
-    public Pirana(double x, double y, ArrayList<String> lista){
-        this(x,y,(new PiranhaG()).getPiranha());
-        this.typePez(lista);
+    public Pirana(double x, double y, Color color, ArrayList<String> lista){
+        this(x,y,(new PiranhaG(color)).getPiranha());
+        while(lista != null){
+            this.typePez(lista);
+        }
     }
     
     private void typePez(ArrayList<String> lista){
         contenedor=new HBox();
-        LabelColor type=new LabelColor(lista);
-        
+        while(lista != null){
+            LabelColor type=new LabelColor(lista);
+        }
     }
     
     

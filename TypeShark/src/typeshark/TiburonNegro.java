@@ -8,6 +8,7 @@ package typeshark;
 import graphics.TiburonNegroG;
 import java.util.ArrayList;
 import javafx.scene.Node;
+import javafx.scene.paint.Color;
 
 /**
  *
@@ -15,10 +16,12 @@ import javafx.scene.Node;
  */
 public class TiburonNegro extends Tiburon{
     private int numPalabras;
-    public TiburonNegro(double x, double y, ArrayList<String> lista) {
-        super(x, y, (new TiburonNegroG()).getTiburonNegro(), lista);
+    
+    public TiburonNegro(double x, double y,Color color, ArrayList<String> lista) {
+        super(x, y, (new TiburonNegroG(color)).getTiburonNegro(), lista);
         this.numPalabras = (int) Math.floor((Math.random()+2));
     }
+
     
     
     

@@ -18,9 +18,9 @@ import javafx.scene.shape.ArcType;
 public class TiburonNegroG {
 private Canvas tiburon;
     
-    public TiburonNegroG(){
+    public TiburonNegroG(Color color){
         tiburon = new Canvas(200,100);
-        this.desingTiburonN();
+        this.desingTiburonN(color);
         //this.moveTiburon(xMove, yMove);    // getLayoutX() + x    --> 270 + 430
     }
 
@@ -30,7 +30,7 @@ private Canvas tiburon;
         return tiburon;
     }
     
-    private void desingTiburonN(){
+    private void desingTiburonN(Color color){
         double xPoints[] = {55,70,75};  //*
         double yPoints[] = {27,5,27};  //*
         double xAleta[] = {50,68,78};  //*
@@ -71,7 +71,7 @@ private Canvas tiburon;
         
         tibu.fillOval(20, 42, 5, 5);
         
-        tibu.setFill(Color.ALICEBLUE);
+        tibu.setFill(color);
         tibu.fillPolygon(xBoca, yBoca, 3);
         //tibu.closePath();
     }

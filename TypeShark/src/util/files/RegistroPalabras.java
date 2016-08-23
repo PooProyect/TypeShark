@@ -19,7 +19,7 @@ public class RegistroPalabras {
     private ArrayList listaPirañas;
     
     public RegistroPalabras(){
-        
+        //constructor
         
     }
     public ArrayList almacenarEnLista(){

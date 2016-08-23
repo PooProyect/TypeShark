@@ -16,6 +16,7 @@ public class Puntaje {
     ArrayList listadoTiburon;
     ArrayList listadoPiraña;
     Puntaje(){
+        //se agregan en las listas las palabras de los archivos de texto
        RegistroPalabras reg=new RegistroPalabras();
        listadoTiburon=reg.almacenarEnLista();
        listadoPiraña=reg.AlmacenarEnListaPiraña();

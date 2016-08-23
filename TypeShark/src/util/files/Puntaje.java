@@ -13,17 +13,27 @@ import java.util.ArrayList;
  * @author Andres
  */
 public class Puntaje {
-    ArrayList listado;
+    ArrayList listadoTiburon;
+    ArrayList listadoPiraña;
     Puntaje(){
-       // FileReader r=new FileReader();
+       RegistroPalabras reg=new RegistroPalabras();
+       listadoTiburon=reg.almacenarEnLista();
+       listadoPiraña=reg.AlmacenarEnListaPiraña();
     }
     public void actualizarLista(){
-        
+        this.listadoTiburon=listadoTiburon;
+        this.listadoPiraña=listadoPiraña;
     }
-    public void eliminar(String nombre){
-        
+    public void eliminarTextoTiburon(String nombre){
+        listadoTiburon.remove(nombre);
     }
-    public ArrayList getListado(){
-        return listado;
+    public ArrayList getListadoTiburon(){
+        return listadoTiburon;
+    }
+    public void eliminarTextoPiraña(String nombre){
+        listadoPiraña.remove(nombre);
+    }
+    public ArrayList getListadoPiraña(){
+        return listadoPiraña;
     }
 }

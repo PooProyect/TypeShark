@@ -5,6 +5,8 @@
  */
 package util.files;
 
+import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.util.ArrayList;
 
@@ -13,28 +15,30 @@ import java.util.ArrayList;
  * @author Andres
  */
 public class Puntaje {
-    ArrayList listadoTiburon;
-    ArrayList listadoPiraña;
-    Puntaje(){
+    ArrayList<String> lista;
+    
+  
         //se agregan en las listas las palabras de los archivos de texto
-       RegistroPalabras reg=new RegistroPalabras();
-       listadoTiburon=reg.almacenarEnLista();
-       listadoPiraña=reg.AlmacenarEnListaPiraña();
+    public Puntaje(String txt){
+        try{
+           
+           BufferedReader bf=new BufferedReader(new FileReader("src\\util\\files\\"+txt));
+           lista=new ArrayList();
+           String bfread;
+           
+           while((bfread=bf.readLine())!=null){
+               
+             lista.add(bfread);
+               
+           }
+           bf.close();
+        }
+        catch(Exception e){
+            
+        }
+        
     }
-    public void actualizarLista(){
-        this.listadoTiburon=listadoTiburon;
-        this.listadoPiraña=listadoPiraña;
-    }
-    public void eliminarTextoTiburon(String nombre){
-        listadoTiburon.remove(nombre);
-    }
-    public ArrayList getListadoTiburon(){
-        return listadoTiburon;
-    }
-    public void eliminarTextoPiraña(String nombre){
-        listadoPiraña.remove(nombre);
-    }
-    public ArrayList getListadoPiraña(){
-        return listadoPiraña;
+     public ArrayList<String> getList(){
+        return lista;
     }
 }

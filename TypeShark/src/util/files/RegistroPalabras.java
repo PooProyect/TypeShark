@@ -15,48 +15,30 @@ import java.util.ArrayList;
  * @author Andres
  */
 public class RegistroPalabras {
-    private ArrayList listaPalabra;
-    private ArrayList listaPirañas;
+    private ArrayList lista;
     
-    public RegistroPalabras(){
-        //constructor
-        
-    }
-    public ArrayList almacenarEnLista(){
-        
+    
+    public RegistroPalabras(String txt){
         try{
-           BufferedReader bf=new BufferedReader(new FileReader("palabras.txt"));
-           listaPalabra=new ArrayList();
+           BufferedReader bf=new BufferedReader(new FileReader("src\\util\\files\\"+txt));
+           lista=new ArrayList();
            String bfread;
            String temp="";
            while((bfread=bf.readLine())!=null){
-               temp=temp+bf;
-               listaPalabra.add(temp);
-               temp="";
+               
+               lista.add(bfread);
+               
            }
+           bf.close();
         }
         catch(Exception e){
             
         }
-        return listaPalabra;
+       
     }
-    public ArrayList AlmacenarEnListaPiraña(){
-        try{
-           BufferedReader bf=new BufferedReader(new FileReader("PalabrasPirañas.txt"));
-           listaPirañas=new ArrayList();
-           String bfread;
-           String temp="";
-           while((bfread=bf.readLine())!=null){
-               temp=temp+bf;
-               listaPirañas.add(temp);
-               temp="";
-           }
-        }
-        catch(Exception e){
-            
-        }
-        return listaPirañas;
+ 
+     
+    public ArrayList<String> getList(){
+        return lista;
     }
-    
-    
 }

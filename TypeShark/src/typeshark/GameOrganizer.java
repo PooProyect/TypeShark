@@ -49,7 +49,7 @@ public class GameOrganizer extends Organizer{
         Tiburon t;
         LabelColor labelC;
         
-        //Label l;                                      // Label tambien debe hacer TranslateX  y TranslateY para moverse con el pez
+        //Label l;                                      // Lab el tambien debe hacer TranslateX  y TranslateY para moverse con el pez
         /*ArrayList<String>list =new ArrayList();
         list.add("aaaa");
         list.add("BBBBsads");
@@ -128,10 +128,10 @@ public class GameOrganizer extends Organizer{
         }
     }
     
-     @Override
+/*     @Override
     public void cambiarPantalla(Event t){
         super.cambiarPantalla(t);
-    }
+    }*/
     
     
 }

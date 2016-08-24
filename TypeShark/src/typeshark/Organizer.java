@@ -28,7 +28,7 @@ public abstract class Organizer {
     public Organizer(){
         
         root=new BorderPane();
-        setScene();
+       
 //   root = new BorderPane();
       //  this.cantTiburones = cantidad;
       //  this.tiburones =  new HashSet<Tiburon>();
@@ -45,18 +45,18 @@ public abstract class Organizer {
         return root;
     }
     //metodo a agregar al diagrama de clases
-    public void cambiarPantalla(Event t){
+    public void cambiarPantalla(Event t,double DimensionX, double   DimensionY){
           Stage stage=new Stage();
                      stage=(Stage) ((Node)t.getSource()).getScene().getWindow();
-                    setScene();
+                    setScene(DimensionX,DimensionY);
                     stage.setScene(scene);
     }
 
     /**
      *
      */
-    public void setScene(){
-        scene=new Scene(root,Constantes.DIMENSION_SCENE_X,Constantes.DIMENSION_SCENE_Y);
+    public void setScene(double DimensionX, double   DimensionY){
+        scene=new Scene(root,DimensionX,DimensionY);
     }
     /*
     private void crearTiburones(int cant){

@@ -80,12 +80,15 @@ public class MenuOrganizer extends Organizer{
                 case 1:{
                    
                     root=(new GameOrganizer(buceador,1000)).getRoot();//throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-                    cambiarPantalla(t);
+                    cambiarPantalla(t,Constantes.DIMENSION_GAME_X,Constantes.DIMENSION_GAME_Y);
                     
                 
                 }break;
-                case 2:{root=(new PuntajeOrganizer()).getRoot();
-                       cambiarPantalla(t);
+                    
+                case 2:{
+                    root=(new PuntajeOrganizer()).getRoot();
+                    
+                    cambiarPantalla(t,Constantes.DIMENSION_PUNTAJE_X,Constantes.DIMENSION_PUNTAJE_Y);
                 }break;
                 case 3:{
                     Platform.exit();
@@ -108,9 +111,9 @@ public class MenuOrganizer extends Organizer{
         
     }
     
-    
+    /*
      @Override
     public void setScene(){
         scene = new Scene(root, Constantes.DIMENSION_GAME_X,Constantes.DIMENSION_GAME_Y);
-    }
+    }*/
 }

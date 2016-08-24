@@ -67,6 +67,8 @@ public class Buceador implements Runnable {
             @Override
             public void run() {
                 try{
+                    //aqui dentro podriamos colocar como podria aumentar la vida del jugador(un if)
+                    
                     Thread.sleep(00);
                     
                 } catch (InterruptedException ex) {

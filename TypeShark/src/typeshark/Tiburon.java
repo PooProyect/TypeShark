@@ -21,7 +21,7 @@ import javafx.scene.paint.Color;
  * @author fabkm
  */
 public class Tiburon extends Pez {
-   private HBox contenedor;
+  // private HBox contenedor;
    //private int numPalabras;
    //private TiburonG tiburon; 
    

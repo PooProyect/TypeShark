@@ -16,4 +16,5 @@ public class Constantes {
     public static final int DIMENSION_GAME_Y = 500;
     public static final int DIMENSION_PUNTAJE_X = 400;
     public static final int DIMENSION_PUNTAJE_Y = 300;
+    public static final int PUNTAJE_EPECIAL=1000;
 }

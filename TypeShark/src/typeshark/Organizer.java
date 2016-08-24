@@ -5,13 +5,10 @@
  */
 package typeshark;
 
-import java.util.*;
 import javafx.event.*;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.layout.*;
-import javafx.scene.control.*;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 
@@ -29,15 +26,7 @@ public abstract class Organizer {
         
         root=new BorderPane();
        
-//   root = new BorderPane();
-      //  this.cantTiburones = cantidad;
-      //  this.tiburones =  new HashSet<Tiburon>();
-      //  Button btn = new Button("start");
-        
-      //  root.setBottom(btn);
-       // this.crearTiburones(cantTiburones);
-      //  btn.setOnAction(new TiburonClick());
-        //root.getChildren().add(tiburon.getCanvas(),btn);
+
     }
     
     public Pane getRoot(){

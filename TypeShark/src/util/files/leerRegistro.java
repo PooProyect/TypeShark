@@ -14,16 +14,16 @@ import java.util.ArrayList;
  *
  * @author Andres
  */
-public class RegistroPalabras {
+public class leerRegistro {
     private ArrayList lista;
     
     
-    public RegistroPalabras(String txt){
+    public leerRegistro(String txt){
         try{
            BufferedReader bf=new BufferedReader(new FileReader("src\\util\\files\\"+txt));
            lista=new ArrayList();
            String bfread;
-           String temp="";
+           
            while((bfread=bf.readLine())!=null){
                
                lista.add(bfread);

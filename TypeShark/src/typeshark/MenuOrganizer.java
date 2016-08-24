@@ -103,7 +103,7 @@ public class MenuOrganizer extends Organizer{
         }
         
     }
-    private class DificultOrganizer{
+   /* private class DificultOrganizer{
         
         DificultOrganizer(){
             

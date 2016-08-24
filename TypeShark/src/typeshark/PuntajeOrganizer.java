@@ -26,7 +26,7 @@ public class PuntajeOrganizer extends Organizer{
     private Button reiniciar,volver;
     private ArrayList<String> lista;
     PuntajeOrganizer(){ 
-        lista=(new Puntaje("Puntuaciones.txt").getList());
+        lista=(new leerRegistro("Puntuaciones.txt").getList());
         root=new BorderPane();
         mostrarPuntaje();
         colocarBotones();

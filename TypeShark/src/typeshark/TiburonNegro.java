@@ -21,6 +21,12 @@ public class TiburonNegro extends Tiburon{
         super(x, y, (new TiburonNegroG(color)).getTiburonNegro(), label);
         this.numPalabras = (int) Math.floor((Math.random()+2));
     }
+    
+    
+    @Override
+    public void run(){
+        super.run();
+    }
 
     
     

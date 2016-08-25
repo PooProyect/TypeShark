@@ -79,8 +79,8 @@ public class MenuOrganizer extends Organizer{
             switch(opcion){
                 case 1:{
                    
-                    root=(new GameOrganizer(buceador,1000)).getRoot();//throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-                    cambiarPantalla(t,Constantes.DIMENSION_GAME_X,Constantes.DIMENSION_GAME_Y);
+                    root=(new NivelOrganizer(buceador)).getRoot();//throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                    cambiarPantalla(t,Constantes.DIMENSION_SCENE_X,Constantes.DIMENSION_SCENE_Y);
                     
                 
                 }break;

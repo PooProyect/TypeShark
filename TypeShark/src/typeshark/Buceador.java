@@ -5,6 +5,7 @@
  */
 package typeshark;
 
+import graphics.BuceadorG;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.logging.Level;
@@ -32,11 +33,12 @@ public class Buceador implements Runnable {
       private Label lSpecial; 
       private Label lPoints;
     public Buceador(){
-        //aun no esta la imagen
-        buceador=new Canvas();
+        //aun no esta la imagen... 
+        buceador= (new BuceadorG()).getBuceador();
         special=0;
         vidas=3;
         puntuacion=0;
+        this.moveBuceador(0, 200);
         crearStatus();
     }
   
@@ -66,20 +68,20 @@ public class Buceador implements Runnable {
                 
             @Override
             public void run() {
-                try{
-                    //aqui dentro podriamos colocar como podria aumentar la vida del jugador(un if)
-                    
-                    Thread.sleep(00);
-                    
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(Buceador.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                   
-                }
-              //  throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-            
-            
+                
+                
+                move(buceador.getTranslateX()+1,buceador.getTranslateY()+3);
+                
+            }
         });
+            try{
+                Thread.sleep(1);
+                    
+            }catch (InterruptedException ex) {
+                    Logger.getLogger(Buceador.class.getName()).log(Level.SEVERE, null, ex);
+            }
+                   
+             
        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     }
@@ -116,4 +118,30 @@ public class Buceador implements Runnable {
     public int getSpecial(){
         return special;
     }
+    
+    public double getX(){
+        return buceador.getTranslateX();
+    }
+    public double getY(){
+        return buceador.getTranslateY();
+    }
+    
+    private void moveBuceador(double x, double y){
+        buceador.setTranslateX(x);
+        buceador.setTranslateY(y);
+    }
+    
+    public void move(double x, double y){
+        this.moveBuceador(x, y);
+    }
+    
+    public boolean isFondo(){
+        return this.getY()==Constantes.DIMENSION_GAME_Y-buceador.getScaleY();  //cuando esta en el Fondo
+    }
+    
+    public boolean sinVidas(){
+        return this.getPunt() == 0;
+    }
+    
+    
 }

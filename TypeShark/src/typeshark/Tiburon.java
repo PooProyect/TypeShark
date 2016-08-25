@@ -60,12 +60,13 @@ public class Tiburon extends Pez {
     @Override
     public void run() {
         final int distancia = 1;
-        for(int i=0; i<600;i++){
+        while(!esLimite()){
             Platform.runLater(new Runnable(){
             
                 @Override
                 public void run() {
                     move(pez.getTranslateX()-distancia,pez.getTranslateY());
+                    if(esLimite()) move(Constantes.DIMENSION_GAME_X+100,pez.getTranslateY());  // vuelve al inicio
                 }
                 
             });

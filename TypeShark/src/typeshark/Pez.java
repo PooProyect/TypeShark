@@ -38,5 +38,9 @@ public abstract class Pez implements Runnable{
         this.movePez(x, y);
     }
     
+    public boolean esLimite(){
+        return pez.getTranslateX() == Constantes.DIMENSION_LIMITE-160;  // quedarian 180 para el buceador 
+    }
+    
     
 }

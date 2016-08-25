@@ -20,6 +20,8 @@ import javafx.scene.layout.HBox;
 
 import util.files.*;
 import graphics.*;
+import java.util.HashSet;
+import java.util.Iterator;
 import javafx.scene.Node;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
@@ -29,165 +31,158 @@ import javafx.scene.paint.Color;
  */
 public class GameOrganizer extends Organizer{
 
-      Buceador buceador;
-    int timeDificult;
-    private ArrayList<String> listaPalabras;
-    private ArrayList<String> listaLetras;
-    GameOrganizer(Buceador buceador, int timeDificult){
-        listaLetras=(new leerRegistro("PalabrasPirañas.txt")).getList();
-        listaPalabras=(new leerRegistro("Palabras.txt")).getList();
-        //root=new FlowPane();
+    Buceador buceador;
+    
+    int time;
+    HashSet setTiburon;
+    HashSet setTiburonNegro;
+    HashSet setPirana;
+    Registro registroPalabra, registroLetra;
+    ArrayList palabras, letras;
+    GameOrganizer(Buceador buceador, int time, int nivel) throws InterruptedException{
+        root=new BorderPane();
+        registroPalabra =  new Registro("Palabras.txt");
+        registroLetra = new Registro("PalabrasPirañas.txt");
+        palabras = registroPalabra.getList();
+        letras = registroLetra.getList();
         this.buceador=buceador;
-        this.timeDificult=timeDificult;
+        this.time = time;
+        //((BorderPane) root).setLeft(buceador.getBuceador());
         añadirPeces();
-        
-        ///dejar el metodo run buceador al final de este costructor, para que muestre los stat
-        runBuceador();
-       
-       
+        ((BorderPane) root).setLeft(buceador.getBuceador());
+        juego();
     }
     private void runBuceador(){
   
-   Thread t=new Thread(buceador);
-   t.start();
-   Thread status=new Thread(new Status());
-   status.start();
+        Thread t=new Thread(buceador);
+        t.start();
+        Thread status=new Thread(new Status());
+        status.start();
     }
-     FlowPane flow;
-    private void añadirPeces(){
-       // TypePez t =new TypePez((new TiburonG(Color.ALICEBLUE)).getTiburon(),listaPalabras.get((int)(Math.random()*listaPalabras.size())),500);
-        FondoMarino fondo = new FondoMarino(Constantes.DIMENSION_GAME_X,Constantes.DIMENSION_GAME_Y);  // extra
-        root.getChildren().add(fondo.getFondoMarino());  
-       flow=new FlowPane(Orientation.VERTICAL);
-        flow.setVgap(10);
-       // flow.getChildren().add(t.getNode());
-        root.getChildren().add(flow);
-        flow.setLayoutX(500);
-      
+    
+    private String getPalabra(){     // Palabras para el tiburon
         
+        int n = (int) Math.random()*palabras.size();
+        if(n==palabras.size()) n--;
+        return  (String) palabras.remove(n);
+    }
+    
+    private String getLetra(){      // Letras para las Pirañas
+        int n = (int) Math.random()*letras.size();
+        if(n==letras.size()) n--;
+        return  (String) letras.remove(n);
+    }
+    
+    private ArrayList getListPalabras(){   // Lista de 2 o 3 Palabras para el Tiburon Negro
+        ArrayList list = new ArrayList();
+        int n = (int) Math.random()+2;
+        for(int i=0; i<n; i++){
+            list.add(getPalabra());
+        }
+        return list;
+    }
+    
+    private void añadirPeces(){
+        FlowPane flow = new FlowPane();
+        FondoMarino fondo = new FondoMarino(Constantes.DIMENSION_GAME_X,Constantes.DIMENSION_GAME_Y);  // extra
+        setTiburon = new HashSet();
+        setTiburonNegro = new HashSet();
+        setPirana = new HashSet();
         StackPane stack;
         Tiburon t;
+        TiburonNegro tn;
+        Pirana p;
         LabelColor labelC;
         
-      
-        ((FlowPane) flow).setVgap(10);
+        flow.setVgap(10);
+        flow.setMaxWidth(400);
+        root.getChildren().add(fondo.getFondoMarino());  // extra: FondoMarino   no se ve el Status??
+          
+            for(int j=0; j<3;j++){       // en total 9 hilos .... es mucho??
+                stack = new StackPane();
+                labelC = new LabelColor(getPalabra());
+                t = new Tiburon(500,0,Color.ALICEBLUE,labelC); // 200
+                stack.setAlignment(Pos.CENTER);
+                stack.getChildren().addAll(t.getPez(),t.getLabel());
+                flow.getChildren().add(stack);
+                setTiburon.add(t);
+            
+            //for(int j=0; j<this.cantTiburonNegro; j++){
+                /*stack = new StackPane();                                // Todo esto sí va... Pero hay que definir cómo presenta las palabras el TiburonNegro
+                labelC = new LabelColor(getListPalabras());
+                tn = new TiburonNegro(500,0,Color.ALICEBLUE,labelC);
+                stack.setAlignment(Pos.CENTER);
+                stack.getChildren().addAll(tn.getPez(),tn.getLabel());
+                flow.getChildren().add(stack);
+                setTiburonNegro.add(tn);*/
+            
+            //for(int j=0; j<this.cantPirana; j++){
+                stack = new StackPane();
+                labelC = new LabelColor(getLetra());
+                p = new Pirana(500,0,Color.ALICEBLUE,labelC);
+                stack.setAlignment(Pos.CENTER);
+                stack.getChildren().addAll(p.getPez(),p.getLabel());
+                flow.getChildren().add(stack);
+                setPirana.add(p);
+            }
+            ((BorderPane) root).setCenter(flow);
+            //((BorderPane) root).setLeft(buceador.getBuceador());
         
+    }
+    
+    private void runPeces() throws InterruptedException{
+        Iterator iterTibu = setTiburon.iterator();
+        Iterator iterTibuN = setTiburonNegro.iterator();
+        Iterator iterPira = setPirana.iterator();
         Thread hilo;
-        for(int i=0;i<3;i++){
-           stack = new StackPane();
-            labelC = new LabelColor("abc"+1);
-            t = new Tiburon(500-i*100,0,Color.ALICEBLUE,labelC); // 200
-         
-            stack.setAlignment(Pos.CENTER);
-            
-            stack.getChildren().addAll(t.getPez(),t.getLabel());
-          // ((FlowPane) flow).getChildren().add((new TypePez((new TiburonG(Color.ALICEBLUE)).getTiburon(),listaPalabras.get((int)(Math.random()*listaPalabras.size())),500)).getNode());
-            //hilo = new Thread(t);
-            //hilo.start();
-            
-            
-        }
-        
-        
-     //  ((BorderPane) root).setCenter(flow);
-        /*Thread tibu=new Thread(t);
-        tibu.start();*/
-    }
-    private class TypePez{
-        Label label1;
-        Label label2;
-        StackPane stack;
-        ArrayList<String> lista;
-        TypePez(Pez pez,String word ,double speed){
-            lista=new ArrayList();
-            lista.add(word);
-            TypePez(pez.getPez(),lista,speed);
-            
-        }
-        //en teoria todo pez es como la funcionabilidad, pero por conveniencia todos tendran un listado
-       public void TypePez(Node pez, ArrayList<String> lista,double speed){
-            HBox contenedor=new HBox();
-            colocarPalabras(lista);
-            label1.setTextFill(Color.ORANGE);
-            label2.setTextFill(Color.OLIVE);
-            contenedor.getChildren().addAll(label1,label2);
-            contenedor.setAlignment(Pos.CENTER);
-            stack=new StackPane();
-            stack.getChildren().addAll(pez,contenedor);
-            
-            root.getChildren().add(stack);
-            stack.setLayoutX(Constantes.DIMENSION_GAME_X/2);
-            stack.setLayoutY(Constantes.DIMENSION_GAME_Y/2);
-            Platform.runLater(new Runnable(){
-
-                @Override
-                public void run() {
-                    flow.setFocusTraversable(true);
-                    flow.addEventHandler(KeyEvent.KEY_PRESSED,new KeyHandler(50));
-                   // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-                }
-                
-            });
-           
-            
-        }
-       private void colocarPalabras(ArrayList<String> lista){
-            label1=new Label("");
-            label2=new Label(lista.get(0));
-            lista.remove(0);
-           
-       }
-        /*private StackPane getNode(){
-            return stack;
+        int cont =0;
+        while(iterTibu.hasNext()){
+            cont ++;
+            Tiburon tibu = (Tiburon) iterTibu.next();
+            //tibu.move(tibu.getPez().getTranslateX(), tibu.getPez().getTranslateY()+100);
+            hilo = new Thread(tibu);
+            hilo.start();
+            if(cont==2) Thread.sleep(time);
+            if(cont==3) Thread.sleep(time);
+        }cont=0;
+        while(iterPira.hasNext()){
+            cont++;
+            Pirana pira = (Pirana) iterPira.next();
+            hilo = new Thread(pira);
+            hilo.start();
+            if(cont==2) Thread.sleep(time);
+            if(cont==3) Thread.sleep(time*2);
+        }cont=0;
+        /*while(iterTibuN.hasNext()){
+            cont++;
+            TiburonNegro tibuN = (TiburonNegro) iterTibuN.next();    // Tiburones Negros aun No inicializados
+            hilo = new Thread(tibuN);
+            hilo.start();
+            if(cont==1) hilo.sleep(time*4);
+            if(cont==2) hilo.sleep(time*6);
+            if(cont==3) hilo.sleep(time*7);
         }*/
-        public class KeyHandler implements EventHandler<KeyEvent>{
-           int point;
-                KeyHandler(int point){
-                this.point=point;    
-                }
-        @Override
-       
-        public void handle(KeyEvent t) { 
-            if(t.getCode().equals(KeyCode.ENTER)){
-                flow.getChildren().remove(stack);
-               // flow.setFocusTraversable(false);
-            }else 
-                if(t.getText().trim().charAt(0)==label2.getText().charAt(0)){
-                    label1.setText(label1.getText().trim()+label2.getText().trim().charAt(0));
-                    label2.setText(label2.getText().substring(1).trim());
-                    if(label2.getText().trim().length()==0){
-                        if(!lista.isEmpty()){
-                            colocarPalabras(lista); 
-                        }else{
-                            flow.getChildren().remove(stack);
-                            buceador.añadirPuntaje(point);
-                        }
-                    }//en el siguiente if colocar un valor de puntaje a reducir, cambiarlo dentro de la clase constantes
-                    if(t.getCode().equals(KeyCode.ENTER)&&buceador.getPunt()>Constantes.PUNTAJE_EPECIAL){
-                        buceador.añadirPuntaje(-Constantes.PUNTAJE_EPECIAL);
-                        flow.getChildren().remove(stack);
-                    }
-                }
-        
-            t.consume();
-            //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        }
-        
     }
+    
+    
+    private void juego() throws InterruptedException{
+        runBuceador();
+        runPeces();
     }
+    
+    
+    
+    
     /**
      * clase interna para mostrar los valores que llevaan mientras va avanzando el juego
      */
-    
-    
-    
     private class Status implements Runnable{
      private HBox status;
      private Label lLife;
      private Label lSpecial; 
      private Label lPoints;
      Status(){
-         crearStatus();//aqui hay que hacer un posicionamiento absoluto
+         crearStatus();
          ((BorderPane)root).setBottom(status);
      }
         @Override
@@ -205,7 +200,7 @@ public class GameOrganizer extends Organizer{
                     
                 });
             }
-            //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         }
             
         private void crearStatus(){
@@ -216,7 +211,9 @@ public class GameOrganizer extends Organizer{
             status.getChildren().addAll(lPoints,lLife,lSpecial);
             status.setSpacing(50);
             status.setAlignment(Pos.CENTER);
-            actualizar();
+            lLife.setText("Life "+buceador.getVidas());
+            lPoints.setText("Puntaje "+buceador.getPunt());
+            lSpecial.setText("Special"+buceador.getSpecial());
         }
         private void actualizar(){
             lLife.setText("Life "+buceador.getVidas());
@@ -224,11 +221,7 @@ public class GameOrganizer extends Organizer{
             lSpecial.setText("Special"+buceador.getSpecial());
         }
     }
-    
-/*     @Override
-    public void cambiarPantalla(Event t){
-        super.cambiarPantalla(t);
-    }*/
+   
     
     
 }

@@ -26,7 +26,7 @@ public class PuntajeOrganizer extends Organizer{
     private Button reiniciar,volver;
     private ArrayList<String> lista;
     PuntajeOrganizer(){ 
-        lista=(new leerRegistro("Puntuaciones.txt").getList());
+        lista=(new Registro("Puntuaciones.txt").getList());
         root=new BorderPane();
         mostrarPuntaje();
         colocarBotones();
@@ -42,7 +42,7 @@ public class PuntajeOrganizer extends Organizer{
         bottom.setAlignment(Pos.CENTER);
         bottom.setSpacing(Constantes.DIMENSION_SCENE_X*.2);
         ((BorderPane)root).setBottom(bottom);
-        
+
         reiniciar.setOnMouseClicked(new ClickHandler(true));
         volver.setOnMouseClicked(new ClickHandler(false));
     }

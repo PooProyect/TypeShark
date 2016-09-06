@@ -93,4 +93,9 @@ public class LabelColor{
         return (Node)contenedor;
         
     }
+   
+   public void setInVisible(){
+       label1.setVisible(false);
+       label2.setVisible(false);
+   }
 }

@@ -5,6 +5,7 @@
  */
 package typeshark;
 
+import javafx.application.Platform;
 import javafx.event.*;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -34,15 +35,23 @@ public abstract class Organizer {
         return root;
     }
     //metodo a agregar al diagrama de clases
-    public void cambiarPantalla(Event t,double DimensionX, double   DimensionY){
-          Stage stage=new Stage();
-                     stage=(Stage) ((Node)t.getSource()).getScene().getWindow();
-                    setScene(DimensionX,DimensionY);
-                    stage.setScene(scene);
+    public void cambiarPantalla(final Event t,final double DimensionX, final double   DimensionY){
+        /*Platform.runLater(new Runnable(){
+
+            @Override
+            public void run() {*/
+                TypeShark.stage=(Stage) ((Node)t.getSource()).getScene().getWindow();
+                setScene(DimensionX,DimensionY);
+                TypeShark.stage.setScene(scene);
+            //}
+        //});
+        
     }
 
     /**
      *
+     * @param DimensionX
+     * @param DimensionY
      */
     public void setScene(double DimensionX, double   DimensionY){
         scene=new Scene(root,DimensionX,DimensionY);

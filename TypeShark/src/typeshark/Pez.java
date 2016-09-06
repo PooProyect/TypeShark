@@ -14,10 +14,12 @@ import javafx.scene.Node;
 public abstract class Pez implements Runnable{
     Node pez;
     LabelColor label;
+    int nivel;
     
-    public Pez(Node pez, LabelColor label){    // todo Pez recibe un Node (en las clases hijas recibirá el node del canvas de cada dibujo)
+    public Pez(Node pez, LabelColor label, int nivel){    // todo Pez recibe un Node (en las clases hijas recibirá el node del canvas de cada dibujo)
         this.pez= pez;
         this.label = label;
+        this.nivel = nivel;
     }
     public Node getPez(){
         return pez;
@@ -39,8 +41,15 @@ public abstract class Pez implements Runnable{
     }
     
     public boolean esLimite(){
-        return pez.getTranslateX() == Constantes.DIMENSION_LIMITE-160;  // quedarian 180 para el buceador 
+        return pez.getTranslateX() == Constantes.DIMENSION_LIMITE-180;  // quedarian 180 para el buceador 
     }
     
+    public void setPezInVisible(){
+        pez.setVisible(false);
+        label.setInVisible();
+    }
     
+    public boolean isVisible(){
+        return pez.isVisible();
+    }
 }

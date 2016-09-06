@@ -25,14 +25,14 @@ public class Tiburon extends Pez {
    //private int numPalabras;
    //private TiburonG tiburon; 
    
-    public Tiburon(double xMove, double yMove, Node pez, LabelColor label){
-        super(pez,label);    // 1º paso el nodo del Canvas (dibujo del Tiburon)
+    public Tiburon(double xMove, double yMove, Node pez, LabelColor label, int nivel){
+        super(pez,label,nivel);    // 1º paso el nodo del Canvas (dibujo del Tiburon)
         super.move(xMove, yMove);  // 2º se mueve el nodo a posicion especifica (de inicio)
         
     }
 
-    public Tiburon(double x, double y,Color color,  LabelColor label){
-        this(x,y,(new TiburonG(color)).getTiburon(), label);
+    public Tiburon(double x, double y,Color color,  LabelColor label,int nivel){
+        this(x,y,(new TiburonG(color)).getTiburon(), label,nivel);
         try{
             this.typePez(label);       // tuve problemas con este linea
         }catch(NullPointerException e){
@@ -65,18 +65,21 @@ public class Tiburon extends Pez {
             
                 @Override
                 public void run() {
+                    
                     move(pez.getTranslateX()-distancia,pez.getTranslateY());
-                    if(esLimite()) move(Constantes.DIMENSION_GAME_X+100,pez.getTranslateY());  // vuelve al inicio
+                    //if(esLimite()) move(Constantes.DIMENSION_GAME_X+100,pez.getTranslateY());  // vuelve al inicio
+                    if(esLimite()) setPezInVisible();
                 }
                 
             });
             try {
-                Thread.sleep(100);
+                Thread.sleep(60-(15*nivel));
             } catch (InterruptedException ex) {
                 Logger.getLogger(Tiburon.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
+    
     
    
 }

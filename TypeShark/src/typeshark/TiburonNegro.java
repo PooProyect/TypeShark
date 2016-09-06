@@ -17,8 +17,8 @@ import javafx.scene.paint.Color;
 public class TiburonNegro extends Tiburon{
     private int numPalabras;
     
-    public TiburonNegro(double x, double y,Color color, LabelColor label) {
-        super(x, y, (new TiburonNegroG(color)).getTiburonNegro(), label);
+    public TiburonNegro(double x, double y,Color color, LabelColor label,int nivel) {
+        super(x, y, (new TiburonNegroG(color)).getTiburonNegro(), label,nivel);
         this.numPalabras = (int) Math.floor((Math.random()+2));
     }
     

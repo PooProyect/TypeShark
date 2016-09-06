@@ -17,14 +17,16 @@ import javafx.stage.Stage;
  * @author Andres
  */
 public class TypeShark extends Application {
+    public static Stage stage;
     
     @Override
-    public void start(Stage primaryStage) {
+    public void start(Stage stage) {
+        TypeShark.stage = stage;
         Organizer pane = new MenuOrganizer();   //GameOrganizer(new Buceador(), 1000);  //new MenuOrganizer();
-        Scene scene = new Scene(pane.getRoot(), Constantes.DIMENSION_SCENE_X, Constantes.DIMENSION_SCENE_Y, Color.ALICEBLUE);primaryStage.setTitle("TypeShark");
+        Scene scene = new Scene(pane.getRoot(), Constantes.DIMENSION_SCENE_X, Constantes.DIMENSION_SCENE_Y, Color.ALICEBLUE);stage.setTitle("TypeShark");
         
-        primaryStage.setScene(scene);
-        primaryStage.show();
+        TypeShark.stage.setScene(scene);
+        TypeShark.stage.show();
     }
 
     /**

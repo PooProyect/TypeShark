@@ -23,13 +23,13 @@ public class Pirana extends Pez{
     private HBox contenedor;
     //private PiranhaG pirana; 
    
-    public Pirana(double xMove, double yMove,Node pez, LabelColor label){
-        super(pez,label);
+    public Pirana(double xMove, double yMove,Node pez, LabelColor label,int nivel){
+        super(pez,label,nivel);
         super.move(xMove, yMove);
     }
 
-    public Pirana(double x, double y, Color color, LabelColor label){
-        this(x,y,(new PiranhaG(color)).getPiranha(),label);
+    public Pirana(double x, double y, Color color, LabelColor label, int nivel){
+        this(x,y,(new PiranhaG(color)).getPiranha(),label,nivel);
         
     }
     
@@ -48,17 +48,18 @@ public class Pirana extends Pez{
     @Override
     public void run() {
         final double distancia = 0.5;
-        for(int i=0; i<600;i++){
+        while(!esLimite()){
             Platform.runLater(new Runnable(){
             
                 @Override
                 public void run() {
                     move(pez.getTranslateX()-distancia,pez.getTranslateY());
+                    if(esLimite()) setPezInVisible();
                 }
                 
             });
             try {
-                Thread.sleep(50);
+                Thread.sleep(20-(5*nivel));
             } catch (InterruptedException ex) {
                 Logger.getLogger(Tiburon.class.getName()).log(Level.SEVERE, null, ex);
             }

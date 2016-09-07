@@ -35,9 +35,6 @@ public class GameOrganizer extends Organizer{
     Buceador buceador;
     int time;
     int nivel;
-    Tiburon t;
-    TiburonNegro tn;
-    Pirana p;
     HashSet setTiburon;
     HashSet setTiburonNegro;
     HashSet setPirana;
@@ -96,15 +93,18 @@ public class GameOrganizer extends Organizer{
         setTiburon = new HashSet();
         setTiburonNegro = new HashSet();
         setPirana = new HashSet();
+        Tiburon t;
+        TiburonNegro tn;
+        Pirana p;
         StackPane stack;
         LabelColor labelC;
         
-        flow.setVgap(5);
+        flow.setVgap(0);
         flow.setMaxWidth(200);
           
         
         Hilo hilo;
-        for(int j=0; j<3;j++){      
+        for(int j=0; j<2;j++){      
             stack = new StackPane();
             labelC = new LabelColor(getPalabra());
             t = new Tiburon(500,0,Color.ALICEBLUE,labelC,nivel);
@@ -114,14 +114,17 @@ public class GameOrganizer extends Organizer{
             setTiburon.add(t);
             hilo = new Hilo(t,time,j);
             hilo.start();
+            hilo.setPriority(Thread.MAX_PRIORITY);
             //for(int j=0; j<this.cantTiburonNegro; j++){
-                /*stack = new StackPane();                                // Todo esto sí va... Pero hay que definir cómo presenta las palabras el TiburonNegro
+                stack = new StackPane();                                
                 labelC = new LabelColor(getListPalabras());
-                tn = new TiburonNegro(500,0,Color.ALICEBLUE,labelC);
+                tn = new TiburonNegro(500,0,Color.ALICEBLUE,labelC,nivel);
                 stack.setAlignment(Pos.CENTER);
                 stack.getChildren().addAll(tn.getPez(),tn.getLabel());
                 flow.getChildren().add(stack);
-                setTiburonNegro.add(tn);*/
+                setTiburonNegro.add(tn);
+                hilo = new Hilo(tn,time,j);
+                hilo.start();
             
             //for(int j=0; j<this.cantPirana; j++){
                 stack = new StackPane();
@@ -133,7 +136,7 @@ public class GameOrganizer extends Organizer{
                 setPirana.add(p);
                 hilo = new Hilo(p,time,j);
                 hilo.start();
-                hilo.setPriority(Thread.MAX_PRIORITY);
+                
             }
             ((BorderPane) root).setCenter(flow);
             //((BorderPane) root).setLeft(buceador.getBuceador());

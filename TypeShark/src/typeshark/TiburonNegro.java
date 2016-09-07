@@ -20,6 +20,7 @@ public class TiburonNegro extends Tiburon{
     public TiburonNegro(double x, double y,Color color, LabelColor label,int nivel) {
         super(x, y, (new TiburonNegroG(color)).getTiburonNegro(), label,nivel);
         this.numPalabras = (int) Math.floor((Math.random()+2));
+        sleep -= 5;
     }
     
     

@@ -68,27 +68,27 @@ public class NivelOrganizer extends Organizer{        // En esta clase tambien d
             switch(opcion){
                 case 1:{
                     try {
-                    root=(new GameOrganizer(buceador,10000,opcion)).getRoot();//throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-                    cambiarPantalla(t,Constantes.DIMENSION_GAME_X,Constantes.DIMENSION_GAME_Y);
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(NivelOrganizer.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                        root=(new GameOrganizer(buceador,10000,opcion)).getRoot();//throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                        cambiarPantalla(t,Constantes.DIMENSION_GAME_X,Constantes.DIMENSION_GAME_Y);
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(NivelOrganizer.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }break;
                 case 2:{
-                try {
-                    root=(new GameOrganizer(buceador,7000,opcion)).getRoot();//throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-                    cambiarPantalla(t,Constantes.DIMENSION_GAME_X,Constantes.DIMENSION_GAME_Y);
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(NivelOrganizer.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                    try {
+                        root=(new GameOrganizer(buceador,7000,opcion)).getRoot();//throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                        cambiarPantalla(t,Constantes.DIMENSION_GAME_X,Constantes.DIMENSION_GAME_Y);
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(NivelOrganizer.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }break;
                 case 3:{
-                try {
-                    root=(new GameOrganizer(buceador,4000,opcion)).getRoot();//throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-                    cambiarPantalla(t,Constantes.DIMENSION_GAME_X,Constantes.DIMENSION_GAME_Y);
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(NivelOrganizer.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                    try {
+                        root=(new GameOrganizer(buceador,4000,opcion)).getRoot();//throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                        cambiarPantalla(t,Constantes.DIMENSION_GAME_X,Constantes.DIMENSION_GAME_Y);
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(NivelOrganizer.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }break;
                 }
         }

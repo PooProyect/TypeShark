@@ -26,6 +26,7 @@ public class Pirana extends Pez{
     public Pirana(double xMove, double yMove,Node pez, LabelColor label,int nivel){
         super(pez,label,nivel);
         super.move(xMove, yMove);
+        sleep = 20-(5*nivel);
     }
 
     public Pirana(double x, double y, Color color, LabelColor label, int nivel){
@@ -54,12 +55,13 @@ public class Pirana extends Pez{
                 @Override
                 public void run() {
                     move(pez.getTranslateX()-distancia,pez.getTranslateY());
-                    if(esLimite()) setPezInVisible();
+                    if(esLimite()) //setPezInVisible();
+                        move(Constantes.DIMENSION_GAME_X-100,pez.getTranslateY() );
                 }
                 
             });
             try {
-                Thread.sleep(20-(5*nivel));
+                Thread.sleep(sleep);
             } catch (InterruptedException ex) {
                 Logger.getLogger(Tiburon.class.getName()).log(Level.SEVERE, null, ex);
             }

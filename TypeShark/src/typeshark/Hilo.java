@@ -29,15 +29,16 @@ public class Hilo extends Thread{
     public void run(){
         System.out.println("Ejecutando hilo  "+index);
         try {
-                    Thread.sleep(time*index);
-                    pez.run();
-                    System.out.println("Iniciando hilo " +index);
+            if(pez.isTiburonNegro()) Thread.sleep(time*(index+1)); // para que entre despues que el pez azul 
+            else Thread.sleep(time*index);
+            pez.run();
+            System.out.println("Iniciando hilo " +index);
                     
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(Hilo.class.getName()).log(Level.SEVERE, null, ex);
-                    System.out.println("Hilo "+index+" termino");
-                }
-            }
+        } catch (InterruptedException ex) {
+            Logger.getLogger(Hilo.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Hilo "+index+" termino");
+        }
+    }
         
         
    

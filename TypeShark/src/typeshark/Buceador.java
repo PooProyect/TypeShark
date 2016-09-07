@@ -38,7 +38,7 @@ public class Buceador implements Runnable {
         special=0;
         vidas=3;
         puntuacion=0;
-        this.moveBuceador(0, 200);
+        this.moveBuceador(0, 100);
         crearStatus();
     }
   
@@ -70,12 +70,12 @@ public class Buceador implements Runnable {
             public void run() {
                 
                 
-                move(buceador.getTranslateX()+1,buceador.getTranslateY()+3);
+                move(buceador.getTranslateX()+0.5,buceador.getTranslateY()+2);
                 
             }
         });
             try{
-                Thread.sleep(1);
+                Thread.sleep(1000);
                     
             }catch (InterruptedException ex) {
                     Logger.getLogger(Buceador.class.getName()).log(Level.SEVERE, null, ex);

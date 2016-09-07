@@ -8,24 +8,16 @@ package typeshark;
 import graphics.*;
 import java.util.ArrayList;
 import javafx.application.Platform;
-import javafx.event.Event;
-import javafx.event.EventHandler;
-import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
 import javafx.scene.layout.HBox;
 
 import util.files.*;
-import graphics.*;
-import java.util.HashSet;
-import java.util.Iterator;
-import javafx.scene.Node;
-import javafx.scene.input.KeyCode;
+import java.util.LinkedList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.scene.paint.Color;
-import javafx.stage.WindowEvent;
 /**
  *
  * @author Andres
@@ -33,37 +25,31 @@ import javafx.stage.WindowEvent;
 public class GameOrganizer extends Organizer{
 
     Buceador buceador;
+    
     int time;
     int nivel;
-    HashSet setTiburon;
-    HashSet setTiburonNegro;
-    HashSet setPirana;
+    LinkedList listPeces;      // aun no es útil 
     Registro registroPalabra, registroLetra;
     ArrayList palabras, letras;
     
     public GameOrganizer(Buceador buceador, int time, int nivel) throws InterruptedException{
         root=new BorderPane();
+        listPeces = new LinkedList();
+        this.buceador=buceador;
+        this.time = time;
+        this.nivel = nivel;
         FondoMarino fondo = new FondoMarino(Constantes.DIMENSION_GAME_X,Constantes.DIMENSION_GAME_Y); 
         registroPalabra =  new Registro("Palabras.txt");
         registroLetra = new Registro("PalabrasPirañas.txt");
         palabras = registroPalabra.getList();
         letras = registroLetra.getList();
-        this.buceador=buceador;
-        this.time = time;
-        this.nivel = nivel;
+        
         root.getChildren().add(fondo.getFondoMarino());
         ((BorderPane) root).setLeft(this.buceador.getBuceador());
         juego();
     }
     
-    private void runBuceador(){
-  
-        Thread t=new Thread(buceador);
-        t.start();
-        Thread status=new Thread(new Status());
-        status.start();
-    }
-    
+      
     private String getPalabra(){     // Palabras para el tiburon
         
         int n = (int) Math.random()*palabras.size();
@@ -87,67 +73,74 @@ public class GameOrganizer extends Organizer{
     }
     
     
-    private void runPeces(){
+    private void crearPeces(){
         FlowPane flow = new FlowPane();
-         
-        setTiburon = new HashSet();
-        setTiburonNegro = new HashSet();
-        setPirana = new HashSet();
         Tiburon t;
         TiburonNegro tn;
         Pirana p;
         StackPane stack;
         LabelColor labelC;
-        
-        flow.setVgap(0);
+        RunPeces runPeces;
+        Thread hilo;
+        flow.setVgap(-10);
         flow.setMaxWidth(200);
-          
-        
-        Hilo hilo;
+        int i=0;
         for(int j=0; j<2;j++){      
             stack = new StackPane();
             labelC = new LabelColor(getPalabra());
-            t = new Tiburon(500,0,Color.ALICEBLUE,labelC,nivel);
+            t = new Tiburon(500,0,Color.ALICEBLUE,labelC,nivel);        // Dos Tiburones 
             stack.setAlignment(Pos.CENTER);
             stack.getChildren().addAll(t.getPez(),t.getLabel());
             flow.getChildren().add(stack);
-            setTiburon.add(t);
-            hilo = new Hilo(t,time,j);
+            listPeces.add(j+i, t);
+            runPeces = new RunPeces(t, j);
+            hilo = new Thread(runPeces);
             hilo.start();
-            hilo.setPriority(Thread.MAX_PRIORITY);
-            //for(int j=0; j<this.cantTiburonNegro; j++){
-                stack = new StackPane();                                
-                labelC = new LabelColor(getListPalabras());
-                tn = new TiburonNegro(500,0,Color.ALICEBLUE,labelC,nivel);
-                stack.setAlignment(Pos.CENTER);
-                stack.getChildren().addAll(tn.getPez(),tn.getLabel());
-                flow.getChildren().add(stack);
-                setTiburonNegro.add(tn);
-                hilo = new Hilo(tn,time,j);
-                hilo.start();
-            
-            //for(int j=0; j<this.cantPirana; j++){
-                stack = new StackPane();
-                labelC = new LabelColor(getLetra());
-                p = new Pirana(500,0,Color.ALICEBLUE,labelC,nivel);
-                stack.setAlignment(Pos.CENTER);
-                stack.getChildren().addAll(p.getPez(),p.getLabel());
-                flow.getChildren().add(stack);
-                setPirana.add(p);
-                hilo = new Hilo(p,time,j);
-                hilo.start();
-                
-            }
+            i++;
+            stack = new StackPane();                                
+            labelC = new LabelColor(getListPalabras());
+            tn = new TiburonNegro(500,0,Color.ALICEBLUE,labelC,nivel);  // 2 Tiburones Negros
+            stack.setAlignment(Pos.CENTER);
+            stack.getChildren().addAll(tn.getPez(),tn.getLabel());
+            flow.getChildren().add(stack);
+            listPeces.add(j+i,tn);
+            runPeces = new RunPeces(tn, j);
+            hilo = new Thread(runPeces);
+            hilo.start();
+            i++;
+            stack = new StackPane();
+            labelC = new LabelColor(getLetra());
+            p = new Pirana(500,0,Color.ALICEBLUE,labelC,nivel);         // 2 Pirañas
+            stack.setAlignment(Pos.CENTER);
+            stack.getChildren().addAll(p.getPez(),p.getLabel());
+            flow.getChildren().add(stack);
+            listPeces.add(j+i,p);
+            runPeces = new RunPeces(p, j);
+            hilo = new Thread(runPeces);
+            hilo.start();
+        }
             ((BorderPane) root).setCenter(flow);
-            //((BorderPane) root).setLeft(buceador.getBuceador());
-        
     }
     
+    private void runBuceador(){
+        
+        Thread t=new Thread(new Runnable(){
+        Status status = new Status();
+            
+            @Override
+            public void run() {
+                buceador.run();
+                status.run();
+            }
+            
+        });
+        t.start();
+    }
     
-    
-    private void juego() throws InterruptedException{
-        //runBuceador();
-        runPeces();
+    private void juego() throws InterruptedException{     
+        crearPeces();
+        runBuceador();
+        
     }
     
     
@@ -201,7 +194,32 @@ public class GameOrganizer extends Organizer{
             lSpecial.setText("Special"+buceador.getSpecial());
         }
     }
+    
+    private class RunPeces implements Runnable{
+        private Pez pez;
+        private int factor;
+    
+        RunPeces(Pez pez,int factor){
+            this.factor = factor;
+            this.pez = pez;
+        }
+    
+    
+        @Override
+        public void run(){
+            try {
+                if(pez.isTiburonNegro())      Thread.sleep(time*(factor+2));    // cada tiburon negro debería demorar un poco más en salir
+                else Thread.sleep(time*factor);
+                pez.run();
+                
+            } catch (InterruptedException ex) {
+                Logger.getLogger(GameOrganizer.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } 
+    }
+        
+}
+
    
     
     
-}

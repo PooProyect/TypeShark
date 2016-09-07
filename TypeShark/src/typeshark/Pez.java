@@ -55,7 +55,7 @@ public abstract class Pez implements Runnable{
         return pez.isVisible();
     }
     
-    public boolean isTiburonNegro(){
+    public boolean isTiburonNegro(){    
         return sleep%10==0;
     }
 }

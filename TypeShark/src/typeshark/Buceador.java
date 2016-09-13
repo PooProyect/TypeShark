@@ -5,9 +5,13 @@
  */
 package typeshark;
 
+import graphics.Barra;
 import graphics.BuceadorG;
+import graphics.Moneda;
+//import java.awt.Color;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
@@ -17,6 +21,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.paint.Color;
 
 /**
  *
@@ -29,17 +34,21 @@ public class Buceador implements Runnable {
     //private String nombre;
     private Node buceador;
     private HBox status;
+    private HBox vida;    // representacion de las vidas
+    private LinkedList monedas,listPeces; 
      private Label lLife;
       private Label lSpecial; 
       private Label lPoints;
+      private Barra barra;
     public Buceador(){
         //aun no esta la imagen... 
         buceador= (new BuceadorG()).getBuceador();
         special=0;
         vidas=3;
-        puntuacion=0;
+        puntuacion=10;    // para probar la Barra
         this.moveBuceador(0, 100);
         crearStatus();
+        crearMonedas();
     }
   
     
@@ -47,7 +56,30 @@ public class Buceador implements Runnable {
     public Node getStatus(){
        return (Node)status; 
     }
-     private void crearStatus(){
+    
+    public Node getMonedas(){
+        return vida;
+    }
+    
+    public Node getBarra(){
+        Color color= Color.ALICEBLUE;
+        if(puntuacion<500)
+            color = Color.BLUE;
+        if(puntuacion>=500 && puntuacion<1000) color = Color.YELLOW;
+        return (new Barra(450-puntuacion,puntuacion,color)).getBarra();    
+    }
+    private void crearMonedas(){
+        vida = new HBox();
+        monedas = new LinkedList();
+        Moneda moneda;
+        for(int i=0; i<3; i++){
+            moneda = new Moneda();
+            vida.getChildren().add(i, moneda.getMoneda());
+            monedas.add(i, moneda);
+        }
+        vida.setSpacing(5);
+    }
+    private void crearStatus(){     // uso este crearStatus en el Game
         status=new HBox();
         lLife=new Label();
         lSpecial=new Label();
@@ -60,7 +92,9 @@ public class Buceador implements Runnable {
         lLife.setText("Life "+getVidas());
         lPoints.setText("Puntaje "+getPunt());
         lSpecial.setText("Special"+getSpecial());
-     }
+        //((BorderPane)root).setBottom(status);
+    }
+     
     @Override
     public void run() {
         while(vidas>0){
@@ -68,9 +102,21 @@ public class Buceador implements Runnable {
                 
             @Override
             public void run() {
-                
-                
+                int tmp[]= {-1,-1};
+                int cont=0;
                 move(buceador.getTranslateX()+0.5,buceador.getTranslateY()+2);
+                for(int i=0; i<listPeces.size();i++){
+                    if(((Pez) listPeces.get(i)).getGana() && tmp[0]!=i && tmp[1]!=i){  // entra en el mismo pez 
+                        restarVida();                                                   // y por eso se acaban las vidas enseguida 
+                        System.out.println(listPeces.get(i).toString());
+                        lLife.setText("Life "+getVidas());
+                        tmp[cont]=i;
+                        cont++;
+                    }if(getVidas()==0) break;
+                }
+            
+                lPoints.setText("Puntaje "+getPunt());
+                lSpecial.setText("Special"+getSpecial());
                 
             }
         });
@@ -89,8 +135,14 @@ public class Buceador implements Runnable {
     public int getVidas(){
         return vidas;
     }
+    
+    public void restarVida(){
+        this.vidas --;
+        ((Moneda) monedas.get(vidas)).getMoneda().setVisible(false);
+    }
     public void aumentarVida(){
         vidas++;
+        ((Moneda) monedas.get(vidas)).getMoneda().setVisible(true);
     }
     public int getPunt(){
         return puntuacion;
@@ -101,9 +153,11 @@ public class Buceador implements Runnable {
     public void añadirPuntaje(int valor){
         puntuacion+=valor;
     }
-    public void restarVida(){
-        vidas--;
+
+    public void setListPeces(LinkedList list){
+        this.listPeces = list;
     }
+    
     /*
     public void grabarPuntuacion(){
         try{
@@ -142,6 +196,7 @@ public class Buceador implements Runnable {
     public boolean sinVidas(){
         return this.getPunt() == 0;
     }
+    
     
     
 }

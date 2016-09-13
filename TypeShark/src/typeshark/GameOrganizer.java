@@ -129,7 +129,7 @@ public class GameOrganizer extends Organizer{
             
             @Override
             public void run() {
-                buceador.run();
+                //buceador.run();
                 status.run();
             }
             
@@ -139,6 +139,7 @@ public class GameOrganizer extends Organizer{
     
     private void juego() throws InterruptedException{     
         crearPeces();
+        buceador.setListPeces(listPeces);
         runBuceador();
         
     }
@@ -155,44 +156,41 @@ public class GameOrganizer extends Organizer{
      private Label lSpecial; 
      private Label lPoints;
      Status(){
-         crearStatus();
-         ((BorderPane)root).setBottom(status);
+        crearStatus();
+         
+         
      }
         @Override
         public void run() {
+            System.out.print(buceador.getPunt());
+            //buceador.run();
             
-            
-            while(buceador.getVidas()>0){
-                Platform.runLater(new Runnable(){
-
-                    @Override
-                    public void run() {
-                        
-                        actualizar();
+                while(buceador.getVidas()>0){
+                        buceador.run();
                     }
-                    
-                });
-            }
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                
+            
         }
             
         private void crearStatus(){
-            status=new HBox();
-            lLife=new Label();
-            lSpecial=new Label();
-            lPoints=new Label();
-            status.getChildren().addAll(lPoints,lLife,lSpecial);
-            status.setSpacing(50);
-            status.setAlignment(Pos.CENTER);
-            lLife.setText("Life "+buceador.getVidas());
-            lPoints.setText("Puntaje "+buceador.getPunt());
-            lSpecial.setText("Special"+buceador.getSpecial());
+            ((BorderPane)root).setBottom(buceador.getStatus());
+            root.getChildren().add(buceador.getMonedas() ); // monedas
         }
         private void actualizar(){
-            lLife.setText("Life "+buceador.getVidas());
+            System.out.print(buceador.getVidas());
+            for(int i=0; i<listPeces.size();i++){
+                if(((Pez) listPeces.get(i)).getGana()){
+                    buceador.restarVida();
+                    
+                    lLife.setText("Life "+buceador.getVidas());
+                    
+                }if(buceador.getVidas()==0) break;
+            }
+            
             lPoints.setText("Puntaje "+buceador.getPunt());
             lSpecial.setText("Special"+buceador.getSpecial());
         }
+        
     }
     
     private class RunPeces implements Runnable{
@@ -203,20 +201,22 @@ public class GameOrganizer extends Organizer{
             this.factor = factor;
             this.pez = pez;
         }
-    
-    
         @Override
         public void run(){
             try {
                 if(pez.isTiburonNegro())      Thread.sleep(time*(factor+2));    // cada tiburon negro debería demorar un poco más en salir
                 else Thread.sleep(time*factor);
                 pez.run();
+                //if(pez.getGana()) buceador.restarVida();
                 
             } catch (InterruptedException ex) {
                 Logger.getLogger(GameOrganizer.class.getName()).log(Level.SEVERE, null, ex);
             }
         } 
     }
+    
+    
+   
         
 }
 

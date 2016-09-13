@@ -55,8 +55,11 @@ public class Pirana extends Pez{
                 @Override
                 public void run() {
                     move(pez.getTranslateX()-distancia,pez.getTranslateY());
-                    if(esLimite()) //setPezInVisible();
+                    if(esLimite()){ //setPezInVisible();
+                        gana = true;
                         move(Constantes.DIMENSION_GAME_X-100,pez.getTranslateY() );
+                        
+                    }
                 }
                 
             });

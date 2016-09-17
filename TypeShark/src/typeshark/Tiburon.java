@@ -29,6 +29,7 @@ public class Tiburon extends Pez {
         super(pez,label,nivel);    // 1º paso el nodo del Canvas (dibujo del Tiburon)
         super.move(xMove, yMove);  // 2º se mueve el nodo a posicion especifica (de inicio)
         sleep = 60-(15*nivel);
+        puntaje = 100;
     }
 
     public Tiburon(double x, double y,Color color,  LabelColor label,int nivel){

@@ -78,6 +78,7 @@ public class GameOrganizer extends Organizer{
         Tiburon t;
         TiburonNegro tn;
         Pirana p;
+        Ballena b;
         StackPane stack;
         LabelColor labelC;
         RunPeces runPeces;
@@ -108,6 +109,20 @@ public class GameOrganizer extends Organizer{
             hilo = new Thread(runPeces);
             hilo.start();
             i++;
+            if(j==0){
+                HBox tmp = new HBox();
+                stack = new StackPane();                                
+                labelC = new LabelColor(getPalabra());
+                b = new Ballena(900,300,Color.ALICEBLUE,labelC,nivel);  // 1 Ballena
+                stack.setAlignment(Pos.CENTER);
+                stack.getChildren().addAll(b.getPez(),b.getLabel());
+                root.getChildren().add(stack);
+                listPeces.add(j+i,b);
+                runPeces = new RunPeces(b, j);
+                hilo = new Thread(runPeces);
+                hilo.start();
+                i++;
+            }
             stack = new StackPane();
             labelC = new LabelColor(getLetra());
             p = new Pirana(500,0,Color.ALICEBLUE,labelC,nivel);         // 2 Pirañas
@@ -123,7 +138,7 @@ public class GameOrganizer extends Organizer{
     }
     
     private void runBuceador(){
-        
+        //Thread b = new Thread(buceador);
         Thread t=new Thread(new Runnable(){
         Status status = new Status();
             
@@ -134,6 +149,7 @@ public class GameOrganizer extends Organizer{
             }
             
         });
+        //b.start();
         t.start();
     }
     
@@ -147,50 +163,25 @@ public class GameOrganizer extends Organizer{
     
     
     
-    /**
-     * clase interna para mostrar los valores que llevaan mientras va avanzando el juego
-     */
+         /**
+      * clase interna para mostrar los valores que llevaan mientras va avanzando el juego
+      */
     private class Status implements Runnable{
-     private HBox status;
-     private Label lLife;
-     private Label lSpecial; 
-     private Label lPoints;
-     Status(){
-        crearStatus();
-         
-         
-     }
+        Status(){
+            crearStatus();
+        }
         @Override
         public void run() {
             System.out.print(buceador.getPunt());
-            //buceador.run();
-            
-                while(buceador.getVidas()>0){
-                        buceador.run();
-                    }
-                
-            
+            while(buceador.getVidas()>0){
+                buceador.run();
+            }
         }
             
         private void crearStatus(){
             ((BorderPane)root).setBottom(buceador.getStatus());
-            root.getChildren().add(buceador.getMonedas() ); // monedas
+            root.getChildren().add(buceador.getMonedas() ); 
         }
-        private void actualizar(){
-            System.out.print(buceador.getVidas());
-            for(int i=0; i<listPeces.size();i++){
-                if(((Pez) listPeces.get(i)).getGana()){
-                    buceador.restarVida();
-                    
-                    lLife.setText("Life "+buceador.getVidas());
-                    
-                }if(buceador.getVidas()==0) break;
-            }
-            
-            lPoints.setText("Puntaje "+buceador.getPunt());
-            lSpecial.setText("Special"+buceador.getSpecial());
-        }
-        
     }
     
     private class RunPeces implements Runnable{
@@ -205,6 +196,7 @@ public class GameOrganizer extends Organizer{
         public void run(){
             try {
                 if(pez.isTiburonNegro())      Thread.sleep(time*(factor+2));    // cada tiburon negro debería demorar un poco más en salir
+                else if(pez.isBallena())  Thread.sleep(time*(factor+5));
                 else Thread.sleep(time*factor);
                 pez.run();
                 //if(pez.getGana()) buceador.restarVida();

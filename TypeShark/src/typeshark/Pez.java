@@ -16,6 +16,7 @@ public abstract class Pez implements Runnable{
     LabelColor label;
     int nivel;
     int sleep;
+    int puntaje;
     boolean gana;
     
     public Pez(Node pez, LabelColor label, int nivel){    // todo Pez recibe un Node (en las clases hijas recibirá el node del canvas de cada dibujo)
@@ -23,6 +24,7 @@ public abstract class Pez implements Runnable{
         this.label = label;
         this.nivel = nivel;
         this.sleep = 0;
+        this.puntaje = 0;
         this.gana = false;
     }
     public Node getPez(){
@@ -35,6 +37,27 @@ public abstract class Pez implements Runnable{
     public boolean getGana(){
         return gana;
     }
+
+    public void setPez(Node pez) {
+        this.pez = pez;
+    }
+
+    public void setLabel(LabelColor label) {
+        this.label = label;
+    }
+
+    public void setNivel(int nivel) {
+        this.nivel = nivel;
+    }
+
+    public void setSleep(int sleep) {
+        this.sleep = sleep;
+    }
+
+    public void setGana(boolean gana) {
+        this.gana = gana;
+    }
+    
     
     private void movePez(double x, double y){
         pez.setTranslateX(x);     
@@ -63,5 +86,9 @@ public abstract class Pez implements Runnable{
     
     public boolean isTiburonNegro(){    
         return sleep%10==0;
+    }
+    
+    public boolean isBallena(){
+        return puntaje == 400;
     }
 }

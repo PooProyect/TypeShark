@@ -95,42 +95,44 @@ public class Buceador implements Runnable {
         //((BorderPane)root).setBottom(status);
     }
      
-    @Override
-    public void run() {
-        while(vidas>0){
-        Platform.runLater(new Runnable(){
-                
+         @Override
+      public void run() {
+          while(vidas>0){
+          Platform.runLater(new Runnable(){
+                  
             @Override
-            public void run() {
-                int tmp[]= {-1,-1};
-                int cont=0;
-                move(buceador.getTranslateX()+0.5,buceador.getTranslateY()+2);
-                for(int i=0; i<listPeces.size();i++){
-                    if(((Pez) listPeces.get(i)).getGana() && tmp[0]!=i && tmp[1]!=i){  // entra en el mismo pez 
-                        restarVida();                                                   // y por eso se acaban las vidas enseguida 
-                        System.out.println(listPeces.get(i).toString());
-                        lLife.setText("Life "+getVidas());
-                        tmp[cont]=i;
-                        cont++;
-                    }if(getVidas()==0) break;
-                }
             
-                lPoints.setText("Puntaje "+getPunt());
-                lSpecial.setText("Special"+getSpecial());
-                
-            }
-        });
-            try{
-                Thread.sleep(1000);
+            public void run() {
+               int tmp[]= {-1,-1};
+               int cont=0;
+                move(buceador.getTranslateX()+0.5,buceador.getTranslateY()+2);
+               for(int i=0; i<listPeces.size();i++){
+                   if(((Pez) listPeces.get(i)).getGana() ){  // entra en el mismo pez 
+                       restarVida(); 
+                       ((Pez) listPeces.get(i)).setGana(false);// y por eso se acaban las vidas enseguida 
+                       System.out.println(listPeces.get(i).toString());
+                       lLife.setText("Life "+getVidas());
+                       tmp[cont]=i;
+                       cont++;
+                   }if(getVidas()==0) break;
+               }
+           
+               lPoints.setText("Puntaje "+getPunt());
+               lSpecial.setText("Special"+getSpecial());
+                  
+              }
+          });
+             try{
+                 Thread.sleep(1000);
+                     
+             }catch (InterruptedException ex) {
+                     Logger.getLogger(Buceador.class.getName()).log(Level.SEVERE, null, ex);
+             }
                     
-            }catch (InterruptedException ex) {
-                    Logger.getLogger(Buceador.class.getName()).log(Level.SEVERE, null, ex);
-            }
-                   
-             
-       // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    }
+              
+        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+     }
+     }
    
     public int getVidas(){
         return vidas;
@@ -157,6 +159,46 @@ public class Buceador implements Runnable {
     public void setListPeces(LinkedList list){
         this.listPeces = list;
     }
+
+   
+
+    public void setStatus(HBox status) {
+        this.status = status;
+    }
+
+    public HBox getVida() {
+        return vida;
+    }
+
+    public void setVida(HBox vida) {
+        this.vida = vida;
+    }
+
+    public Label getlLife() {
+        return lLife;
+    }
+
+    public void setlLife(Label lLife) {
+        this.lLife = lLife;
+    }
+
+    public Label getlSpecial() {
+        return lSpecial;
+    }
+
+    public void setlSpecial(Label lSpecial) {
+        this.lSpecial = lSpecial;
+    }
+
+    public Label getlPoints() {
+        return lPoints;
+    }
+
+    public void setlPoints(Label lPoints) {
+        this.lPoints = lPoints;
+    }
+    
+    
     
     /*
     public void grabarPuntuacion(){

@@ -21,6 +21,8 @@ public class TiburonNegro extends Tiburon{
         super(x, y, (new TiburonNegroG(color)).getTiburonNegro(), label,nivel);
         this.numPalabras = (int) Math.floor((Math.random()+2));
         sleep -= 5;
+        if(numPalabras == 2) this.puntaje= 200;
+        else this.puntaje = 300;
     }
     
     

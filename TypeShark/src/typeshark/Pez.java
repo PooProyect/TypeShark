@@ -91,4 +91,10 @@ public abstract class Pez implements Runnable{
     public boolean isBallena(){
         return puntaje == 400;
     }
+    LabelColor getLabelColor(){
+        return label;
+    }
+   public double getX(){
+       return pez.getLayoutX();
+   }
 }

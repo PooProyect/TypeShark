@@ -18,4 +18,9 @@ public class Constantes {
     public static final int DIMENSION_PUNTAJE_Y = 300;
     public static final int PUNTAJE_EPECIAL = 1000 ;
     public static final int DIMENSION_LIMITE = 180;
+    
+    //valores para los peces
+    public static final int PUNTAJE_PIRANHA = 100;
+    public static final int PUNTAJE_TIBURON_NEGRO = 500;
+    public static final int PUNTAJE_TIBURON = 250;
 }

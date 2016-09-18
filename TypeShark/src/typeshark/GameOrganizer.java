@@ -7,16 +7,19 @@ package typeshark;
 
 import graphics.*;
 import java.util.ArrayList;
-import javafx.application.Platform;
+
 import javafx.geometry.Pos;
-import javafx.scene.control.Label;
+
 import javafx.scene.layout.*;
-import javafx.scene.layout.HBox;
+//import javafx.scene.layout.HBox;
 
 import util.files.*;
 import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Platform;
+import javafx.event.EventHandler;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 /**
  *
@@ -28,7 +31,7 @@ public class GameOrganizer extends Organizer{
     
     int time;
     int nivel;
-    LinkedList listPeces;      // aun no es útil 
+    LinkedList<Pez> listPeces;      // aun no es útil 
     Registro registroPalabra, registroLetra;
     ArrayList palabras, letras;
     
@@ -47,25 +50,26 @@ public class GameOrganizer extends Organizer{
         root.getChildren().add(fondo.getFondoMarino());
         ((BorderPane) root).setLeft(this.buceador.getBuceador());
         juego();
+        buscarPez();
     }
     
       
     private String getPalabra(){     // Palabras para el tiburon
         
-        int n = (int) Math.random()*palabras.size();
-        if(n==palabras.size()) n--;
-        return  (String) palabras.remove(n);
+        int n = (int) (Math.random()*palabras.size());
+       
+        return  (String) palabras.get(n);
     }
     
     private String getLetra(){      // Letras para las Pirañas
-        int n = (int) Math.random()*letras.size();
-        if(n==letras.size()) n--;
-        return  (String) letras.remove(n);
+        int n = (int) (Math.random()*letras.size());
+        
+        return  (String) letras.get(n);
     }
     
     private ArrayList getListPalabras(){   // Lista de 2 o 3 Palabras para el Tiburon Negro
         ArrayList list = new ArrayList();
-        int n = (int) Math.random()+2;
+        int n = (int) (Math.random())+2;
         for(int i=0; i<n; i++){
             list.add(getPalabra());
         }
@@ -110,7 +114,7 @@ public class GameOrganizer extends Organizer{
             hilo.start();
             i++;
             if(j==0){
-                HBox tmp = new HBox();
+               // HBox tmp = new HBox();
                 stack = new StackPane();                                
                 labelC = new LabelColor(getPalabra());
                 b = new Ballena(900,300,Color.ALICEBLUE,labelC,nivel);  // 1 Ballena
@@ -208,8 +212,38 @@ public class GameOrganizer extends Organizer{
     }
     
     
+   private void buscarPez(){
+                    Platform.runLater(new Runnable(){
+
+                        @Override
+                        public void run() {
+                           root.setOnKeyPressed(new KeyHandler());
+// throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                        }
+                        
+                    });
+               }
    
+         private class KeyHandler implements EventHandler<KeyEvent>{
+
+        @Override
+       
+        public void handle(KeyEvent t) {
+            int i=0;
+        while(i<listPeces.size()){
+            if(listPeces.get(i).getX()<Constantes.DIMENSION_GAME_X){
+                listPeces.get(i).getLabelColor().esInicial(t.getText().charAt(0));
+            }
+            
+            i++;
+        }
         
+       
+       t.consume();
+            //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+        
+    }
 }
 
    

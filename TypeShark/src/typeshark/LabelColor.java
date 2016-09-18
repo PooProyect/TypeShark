@@ -8,13 +8,13 @@ package typeshark;
 import java.util.ArrayList;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
-
+import javafx.event.EventType;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
-
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
 /**
@@ -25,7 +25,7 @@ public class LabelColor{
     private HBox contenedor;
     private ArrayList<String> lista;
     private Label label1,label2;
-    //private boolean esObjetivo=true;
+   
  
     LabelColor(String c){
     lista=new ArrayList(); 
@@ -45,65 +45,32 @@ public class LabelColor{
       
         label1=new Label();
         label2=new Label(lista.get(0));
-        
         label2.setTextFill(Color.BLACK);
         label1.setTextFill(Color.ORANGE);
         contenedor.getChildren().addAll(label1,label2);
         contenedor.setAlignment(Pos.CENTER);
-    
+       
   
     }
-    boolean esObjetivo=true;
-    public void esInicial(char c){
-        if(c==label2.getText().trim().charAt(0)){
-            colorear();
-            //comparo hasta que se llegue el momento que no posea ni un caracter en ese label
-                Platform.runLater(new Runnable(){
-                    @Override
-                    public void run() {
-                        
-                        contenedor.requestFocus();
-                        contenedor.addEventFilter(KeyEvent.KEY_TYPED,new KeyHandler());
-                            System.out.println("asdksdka");
-                    }
-                });
-            
-        }
+ public boolean comparar(char c){
+        return label2.getText().trim().charAt(0)==c;
         
        
     }
     
-    
-    
-    private void colorear(){
+    public void colorear(){
         label1.setText(label1.getText().trim()+label2.getText().trim().charAt(0));
-                label2.setText(label2.getText().substring(1).trim());
-    }
-    private class KeyHandler implements EventHandler<KeyEvent>{
-
-        @Override
-       
-        public void handle(KeyEvent t) {
-        
-        
-            if(t.getCharacter().trim().charAt(0)==label2.getText().trim().charAt(0)){
-                colorear();
-                if(label2.getText().trim().length()==0){
+        label2.setText(label2.getText().substring(1).trim());
+                if(lista.get(0)==label1.getText().trim()){
                     lista.remove(label1.getText().trim());
+                    if(lista.size()>0){
+                        label1.setText("");
+                        label2.setText(lista.get(0));
+                    }
+                }
                 
-                if(lista.size()>0){
-                    label1.setText("");
-                    label2.setText(lista.get(0));
-                }else{
-                    esObjetivo=false;
-                }
-                }
-            }
-       t.consume();
-            //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        }
-        
     }
+
     
    public  Node  getNode(){
         return (Node)contenedor;
@@ -113,6 +80,8 @@ public class LabelColor{
    public void setInVisible(){
        label1.setVisible(false);
        label2.setVisible(false);
-       
    }
+     public boolean tieneLetras(){
+        return label2.getText().trim().length()>0;
+    }
 }

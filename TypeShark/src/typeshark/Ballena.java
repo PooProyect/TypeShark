@@ -25,8 +25,9 @@ public class Ballena extends Pez{
         puntaje = 400;
     }
     
-    public Ballena(double x, double y,Color color,  LabelColor label,int nivel){
-        this(x,y,(new BallenaG()).getBallena(), label,nivel);
+    @Override
+    public boolean esLimite(){
+        return pez.getTranslateX() == Constantes.DIMENSION_LIMITE+120;  // igualando linea de limites
     }
 
     @Override
@@ -42,7 +43,7 @@ public class Ballena extends Pez{
                     //if(esLimite()) move(Constantes.DIMENSION_GAME_X+100,pez.getTranslateY());  // vuelve al inicio
                     if(esLimite()){ //setPezInVisible();
                         gana = true;
-                        move(Constantes.DIMENSION_GAME_X-100,pez.getTranslateY() ); // siempre se queda en el mismo getTranslateY()
+                        move(Constantes.DIMENSION_GAME_X+600,pez.getTranslateY() ); // siempre se queda en el mismo getTranslateY()
                     }
                 }
                 

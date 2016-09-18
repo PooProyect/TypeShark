@@ -45,10 +45,9 @@ public class Buceador implements Runnable {
         buceador= (new BuceadorG()).getBuceador();
         special=0;
         vidas=3;
-        puntuacion=10;    // para probar la Barra
+        puntuacion=0;    // para probar la Barra
         this.moveBuceador(0, 100);
-        crearStatus();
-        crearMonedas();
+        
     }
   
     
@@ -68,18 +67,18 @@ public class Buceador implements Runnable {
         if(puntuacion>=500 && puntuacion<1000) color = Color.YELLOW;
         return (new Barra(450-puntuacion,puntuacion,color)).getBarra();    
     }
-    private void crearMonedas(){
+    public void crearMonedas(){
         vida = new HBox();
         monedas = new LinkedList();
         Moneda moneda;
-        for(int i=0; i<3; i++){
+        for(int i=0; i<getVidas(); i++){
             moneda = new Moneda();
             vida.getChildren().add(i, moneda.getMoneda());
             monedas.add(i, moneda);
         }
         vida.setSpacing(5);
     }
-    private void crearStatus(){     // uso este crearStatus en el Game
+    public void crearStatus(){     // uso este crearStatus en el Game
         status=new HBox();
         lLife=new Label();
         lSpecial=new Label();
@@ -158,6 +157,14 @@ public class Buceador implements Runnable {
 
     public void setListPeces(LinkedList list){
         this.listPeces = list;
+    }
+
+    public void setVidas(int vidas) {
+        this.vidas = vidas;
+    }
+
+    public void setPuntuacion(int puntuacion) {
+        this.puntuacion = puntuacion;
     }
 
    

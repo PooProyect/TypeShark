@@ -7,20 +7,19 @@ package typeshark;
 
 import graphics.*;
 import java.util.ArrayList;
-
+import javafx.application.Platform;
 import javafx.geometry.Pos;
 
 import javafx.scene.layout.*;
-//import javafx.scene.layout.HBox;
+
 
 import util.files.*;
 import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.paint.Color;
+
 /**
  *
  * @author Andres
@@ -50,7 +49,7 @@ public class GameOrganizer extends Organizer{
         root.getChildren().add(fondo.getFondoMarino());
         ((BorderPane) root).setLeft(this.buceador.getBuceador());
         juego();
-        buscarPez();
+        type();
     }
     
       
@@ -93,7 +92,7 @@ public class GameOrganizer extends Organizer{
         for(int j=0; j<2;j++){      
             stack = new StackPane();
             labelC = new LabelColor(getPalabra());
-            t = new Tiburon(500,0,Color.ALICEBLUE,labelC,nivel);        // Dos Tiburones 
+            t = new Tiburon(500,0,(new TiburonG()).getTiburon(),labelC,nivel);        // Dos Tiburones 
             stack.setAlignment(Pos.CENTER);
             stack.getChildren().addAll(t.getPez(),t.getLabel());
             flow.getChildren().add(stack);
@@ -104,7 +103,7 @@ public class GameOrganizer extends Organizer{
             i++;
             stack = new StackPane();                                
             labelC = new LabelColor(getListPalabras());
-            tn = new TiburonNegro(500,0,Color.ALICEBLUE,labelC,nivel);  // 2 Tiburones Negros
+            tn = new TiburonNegro(500,0,(new TiburonNegroG()).getTiburonNegro(),labelC,nivel);  // 2 Tiburones Negros
             stack.setAlignment(Pos.CENTER);
             stack.getChildren().addAll(tn.getPez(),tn.getLabel());
             flow.getChildren().add(stack);
@@ -114,10 +113,10 @@ public class GameOrganizer extends Organizer{
             hilo.start();
             i++;
             if(j==0){
-               // HBox tmp = new HBox();
+                //HBox tmp = new HBox();
                 stack = new StackPane();                                
                 labelC = new LabelColor(getPalabra());
-                b = new Ballena(900,300,Color.ALICEBLUE,labelC,nivel);  // 1 Ballena
+                b = new Ballena(1500,300,(new BallenaG()).getBallena(),labelC,nivel);  // 1 Ballena
                 stack.setAlignment(Pos.CENTER);
                 stack.getChildren().addAll(b.getPez(),b.getLabel());
                 root.getChildren().add(stack);
@@ -129,7 +128,7 @@ public class GameOrganizer extends Organizer{
             }
             stack = new StackPane();
             labelC = new LabelColor(getLetra());
-            p = new Pirana(500,0,Color.ALICEBLUE,labelC,nivel);         // 2 Pirañas
+            p = new Pirana(500,0,(new PiranhaG()).getPiranha(),labelC,nivel);         // 2 Pirañas
             stack.setAlignment(Pos.CENTER);
             stack.getChildren().addAll(p.getPez(),p.getLabel());
             flow.getChildren().add(stack);
@@ -173,6 +172,7 @@ public class GameOrganizer extends Organizer{
     private class Status implements Runnable{
         Status(){
             crearStatus();
+            
         }
         @Override
         public void run() {
@@ -183,6 +183,8 @@ public class GameOrganizer extends Organizer{
         }
             
         private void crearStatus(){
+            buceador.crearStatus();
+            buceador.crearMonedas();
             ((BorderPane)root).setBottom(buceador.getStatus());
             root.getChildren().add(buceador.getMonedas() ); 
         }
@@ -211,32 +213,51 @@ public class GameOrganizer extends Organizer{
         } 
     }
     
-    
-   private void buscarPez(){
-                    Platform.runLater(new Runnable(){
-
-                        @Override
-                        public void run() {
-                           root.setOnKeyPressed(new KeyHandler());
-// throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-                        }
-                        
-                    });
-               }
+  private boolean tieneObjetivo =false;
+   Pez objetivo;
+   private boolean tieneObjetivo(){
+       return tieneObjetivo;
+   }
+   private void buscarInicial(char c){
+       int i=0;
+       while(i<listPeces.size()){
+           if(/*listPeces.get(i).getX()<Constantes.DIMENSION_GAME_X&&*/listPeces.get(i).getLabelColor().comparar(c)){
+              tieneObjetivo=true;
+              objetivo=listPeces.get(i);
+              objetivo.getLabelColor().colorear();
+              if(!objetivo.getLabelColor().tieneLetras()){
+                  tieneObjetivo=false;
+              }
+              i=listPeces.size();
+           }
+           i++;
+       }
+   }     
    
-         private class KeyHandler implements EventHandler<KeyEvent>{
+   
+    private class KeyHandler implements EventHandler<KeyEvent>{
 
         @Override
        
         public void handle(KeyEvent t) {
-            int i=0;
-        while(i<listPeces.size()){
-            if(listPeces.get(i).getX()<Constantes.DIMENSION_GAME_X){
-                listPeces.get(i).getLabelColor().esInicial(t.getText().charAt(0));
+            if(!tieneObjetivo()){
+                buscarInicial(t.getText().charAt(0));
+            }else{
+                if(objetivo.getLabelColor().tieneLetras()){
+                    if(objetivo.getLabelColor().comparar(t.getText().charAt(0)))
+                    {
+                        objetivo.getLabelColor().colorear();
+                    }
+                }else{
+                    tieneObjetivo=false;
+                }
+                    
+                    
+      
+        
+                
             }
-            
-            i++;
-        }
+        
         
        
        t.consume();
@@ -244,6 +265,22 @@ public class GameOrganizer extends Organizer{
         }
         
     }
+    private void type(){
+        Platform.runLater(new Runnable(){
+
+            @Override
+            public void run() {
+                root.requestFocus();
+                root.setOnKeyPressed(new KeyHandler());
+
+
+//throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+            
+        });
+    }
+ 
+        
 }
 
    

@@ -21,19 +21,20 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import util.files.Registro;
 
 /**
  *
  * @author Andres
  */
 public class MenuOrganizer extends Organizer{
-    private Button empezar,salir,puntaje;
+    private Button empezar,salir,puntaje,juegosGuardados;
     //private Text title;
     private Buceador buceador;
     
     MenuOrganizer(){
         buceador=new Buceador();
-        root=new BorderPane();
+        //root=new BorderPane();
         
         generarMenu();
         
@@ -44,7 +45,7 @@ public class MenuOrganizer extends Organizer{
         
        
         empezar=new Button("Empezar");
-        puntaje=new Button("Puntaje");
+        puntaje=new Button("Puntajes");
         salir=new Button (" Salir ");
         Node title=new Text("TYPERSHARK");
         ((Text) title).setFont(Font.font("Ravie",FontWeight.NORMAL,40 ));
@@ -56,11 +57,22 @@ public class MenuOrganizer extends Organizer{
         title.setTranslateX(20);
         title.setTranslateY(20);
         menu.setAlignment(Pos.CENTER);
-        /*title.setLayoutX(Constantes.DIMENSION_SCENE_X*.03);
-        title.setLayoutY(Constantes.DIMENSION_SCENE_Y*.2);
-        menu.setLayoutX(Constantes.DIMENSION_SCENE_X*.403);
-        menu.setLayoutY(Constantes.DIMENSION_SCENE_Y*.4);*/
         menu.setSpacing(Constantes.DIMENSION_SCENE_Y*.08);
+        
+        if(! new Registro("Juego.txt").getList().isEmpty()){
+            juegosGuardados = new Button("Juegos\nGuardados");
+            juegosGuardados.setAlignment(Pos.BOTTOM_CENTER);
+            ((BorderPane) root).setLeft(juegosGuardados);
+            juegosGuardados.setOnMouseClicked(new EventHandler<MouseEvent>(){
+
+                @Override
+                public void handle(MouseEvent event) {
+                    root = (new InformacionOrganizer(buceador,0,true)).getRoot();   // true porque sí hay elementos q cargar en Juego 
+                    cambiarPantalla(event,Constantes.DIMENSION_SCENE_X,Constantes.DIMENSION_SCENE_Y);
+                    event.consume();
+                }
+            });
+        } 
         
         //((BorderPane) root).setRight((new Tiburon(-30,80,Color.AQUA,null)).getPez());
         empezar.setOnMouseClicked(new ClickHandler(1));
@@ -86,7 +98,7 @@ public class MenuOrganizer extends Organizer{
                 }break;
                     
                 case 2:{
-                    root=(new PuntajeOrganizer()).getRoot();
+                    root=(new PuntajeOrganizer(buceador,0)).getRoot();
                     
                     cambiarPantalla(t,Constantes.DIMENSION_PUNTAJE_X,Constantes.DIMENSION_PUNTAJE_Y);
                 }break;

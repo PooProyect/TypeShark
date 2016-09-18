@@ -32,16 +32,7 @@ public class Tiburon extends Pez {
         puntaje = 100;
     }
 
-    public Tiburon(double x, double y,Color color,  LabelColor label,int nivel){
-        this(x,y,(new TiburonG(color)).getTiburon(), label,nivel);
-        
-        try{
-            this.typePez(label);       // tuve problemas con este linea
-        }catch(NullPointerException e){
-            
-        }
-        
-    }
+    
     
     /**
      *

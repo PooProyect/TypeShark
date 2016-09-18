@@ -30,10 +30,7 @@ public class Pirana extends Pez{
         puntaje = 50;
     }
 
-    public Pirana(double x, double y, Color color, LabelColor label, int nivel){
-        this(x,y,(new PiranhaG(color)).getPiranha(),label,nivel);
-        
-    }
+    
     
     private void typePez(ArrayList<String> lista){
         contenedor=new HBox();

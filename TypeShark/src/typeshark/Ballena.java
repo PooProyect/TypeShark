@@ -21,6 +21,7 @@ public class Ballena extends Pez{
     public Ballena(double xMove, double yMove,Node pez, LabelColor label,int nivel){
         super(pez,label,nivel);
         super.move(xMove, yMove);
+        isBallena=true;
         sleep = 60-(15*nivel);
         puntaje = 400;
     }

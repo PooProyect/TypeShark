@@ -62,14 +62,16 @@ public class LabelColor{
                 if(lista.contains(label1.getText().trim())){
                     lista.remove(label1.getText().trim());
                     if(lista.size()>0){
-                        label1.setText("");
-                        label2.setText(lista.get(0));
+                        llenarLabel();
                     }
                 }
                 
     }
 
-    
+    private void llenarLabel(){
+        label1.setText("");
+        label2.setText(lista.get(0));
+    }
    public  Node  getNode(){
         return (Node)contenedor;
         
@@ -82,4 +84,14 @@ public class LabelColor{
      public boolean tieneLetras(){
         return label2.getText().trim().length()>0;
     }
+     public void añadirLista(String c){
+         lista.add(c);
+         llenarLabel();
+    
+}
+     public void anadirLista(ArrayList<String> lista){
+         this.lista=lista;
+         llenarLabel();
+     } 
+
 }

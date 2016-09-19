@@ -68,7 +68,7 @@ public class GameOrganizer extends Organizer{
     
     private ArrayList getListPalabras(){   // Lista de 2 o 3 Palabras para el Tiburon Negro
         ArrayList list = new ArrayList();
-        int n = (int) (Math.random())+2;
+        int n = 2+((int) (Math.random()*1));
         for(int i=0; i<n; i++){
             list.add(getPalabra());
         }
@@ -176,7 +176,7 @@ public class GameOrganizer extends Organizer{
         }
         @Override
         public void run() {
-            System.out.print(buceador.getPunt());
+          //  System.out.print(buceador.getPunt());
             while(buceador.getVidas()>0){
                 buceador.run();
             }
@@ -233,6 +233,9 @@ public class GameOrganizer extends Organizer{
               if(!objetivo.getLabelColor().tieneLetras()){
                   tieneObjetivo=false;
                   buceador.añadirPuntaje(objetivo.getPuntaje());
+                  objetivo.move(500, objetivo.getY());
+                  objetivo.getLabelColor().añadirLista(getLetra());
+                 // objetivo.getLabelColor().colocarALista(getLetra());
               }
               i=listPeces.size();
            }
@@ -254,6 +257,15 @@ public class GameOrganizer extends Organizer{
                     if(!objetivo.getLabelColor().tieneLetras()){
                          buceador.añadirPuntaje(objetivo.getPuntaje());
                          tieneObjetivo=false;
+                         objetivo.move(500, objetivo.getY());
+                         if(objetivo.esTNegro()){
+                             objetivo.getLabelColor().anadirLista(getListPalabras());
+                         }else if (objetivo.esBallena()){
+                             objetivo.getLabelColor().añadirLista(getPalabra());//se usa el mismo listado de palabras, debido a que no tenemos el listado de ballena
+                         }else{
+                             objetivo.getLabelColor().añadirLista(getPalabra());
+                         }
+                         
                     }
                 }
            

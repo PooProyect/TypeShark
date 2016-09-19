@@ -9,17 +9,16 @@ import graphics.Barra;
 import graphics.BuceadorG;
 import graphics.Moneda;
 //import java.awt.Color;
-import java.io.FileReader;
-import java.io.FileWriter;
+
 import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
-import javafx.scene.canvas.Canvas;
+
 import javafx.scene.control.Label;
-import javafx.scene.layout.BorderPane;
+
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 

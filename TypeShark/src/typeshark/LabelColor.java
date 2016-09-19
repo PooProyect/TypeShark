@@ -59,7 +59,7 @@ public class LabelColor{
     public void colorear(){
         label1.setText(label1.getText().trim()+label2.getText().trim().charAt(0));
         label2.setText(label2.getText().substring(1).trim());
-                if(lista.get(0)==label1.getText().trim()){
+                if(lista.contains(label1.getText().trim())){
                     lista.remove(label1.getText().trim());
                     if(lista.size()>0){
                         label1.setText("");

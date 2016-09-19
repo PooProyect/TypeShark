@@ -96,6 +96,9 @@ public abstract class Pez implements Runnable{
         return label;
     }
    public double getX(){
-       return pez.getLayoutX();
+       return pez.getTranslateX();
+   }
+   public int getPuntaje(){
+       return puntaje;
    }
 }

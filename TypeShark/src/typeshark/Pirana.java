@@ -31,13 +31,7 @@ public class Pirana extends Pez{
     }
 
     
-    
-    private void typePez(ArrayList<String> lista){
-        contenedor=new HBox();
-        while(lista != null){
-            LabelColor type=new LabelColor(lista);
-        }
-    }
+   
     
     
     public Node getTypePez(){
@@ -52,11 +46,10 @@ public class Pirana extends Pez{
             
                 @Override
                 public void run() {
-                    move(pez.getTranslateX()-distancia,pez.getTranslateY());
-                    if(esLimite()){ //setPezInVisible();
+                    move(pez.getTranslateX()-distancia,pez.getTranslateY()); if(esLimite()){ //setPezInVisible();
                         gana = true;
                         move(Constantes.DIMENSION_GAME_X-100,pez.getTranslateY() );
-                        
+                    
                     }
                 }
                 

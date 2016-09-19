@@ -218,15 +218,21 @@ public class GameOrganizer extends Organizer{
    private boolean tieneObjetivo(){
        return tieneObjetivo;
    }
+   
+   //este metodo funciona directamente como eliminacion de la piraña o buscar el objetivo
    private void buscarInicial(char c){
        int i=0;
+       
        while(i<listPeces.size()){
-           if(/*listPeces.get(i).getX()<Constantes.DIMENSION_GAME_X&&*/listPeces.get(i).getLabelColor().comparar(c)){
+           
+           //se necesita un metodo que indique o asegure que esta dentro de la pantalla, para asi evitar que se tipeen los que estan fuera del scene
+           if(listPeces.get(i).getX()<=400&&listPeces.get(i).getLabelColor().comparar(c)){
               tieneObjetivo=true;
               objetivo=listPeces.get(i);
               objetivo.getLabelColor().colorear();
               if(!objetivo.getLabelColor().tieneLetras()){
                   tieneObjetivo=false;
+                  buceador.añadirPuntaje(objetivo.getPuntaje());
               }
               i=listPeces.size();
            }
@@ -243,18 +249,14 @@ public class GameOrganizer extends Organizer{
             if(!tieneObjetivo()){
                 buscarInicial(t.getText().charAt(0));
             }else{
-                if(objetivo.getLabelColor().tieneLetras()){
-                    if(objetivo.getLabelColor().comparar(t.getText().charAt(0)))
-                    {
-                        objetivo.getLabelColor().colorear();
+                if(objetivo.getLabelColor().comparar(t.getText().charAt(0))){
+                    objetivo.getLabelColor().colorear();
+                    if(!objetivo.getLabelColor().tieneLetras()){
+                         buceador.añadirPuntaje(objetivo.getPuntaje());
+                         tieneObjetivo=false;
                     }
-                }else{
-                    tieneObjetivo=false;
                 }
-                    
-                    
-      
-        
+           
                 
             }
         
@@ -266,18 +268,18 @@ public class GameOrganizer extends Organizer{
         
     }
     private void type(){
-        Platform.runLater(new Runnable(){
+      /*  Platform.runLater(new Runnable(){
 
             @Override
-            public void run() {
+            public void run() {*/
                 root.requestFocus();
                 root.setOnKeyPressed(new KeyHandler());
 
 
 //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-            }
+           /* }
             
-        });
+        });*/
     }
  
         

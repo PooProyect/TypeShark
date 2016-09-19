@@ -56,7 +56,7 @@ public class InformacionOrganizer extends Organizer{
 
             @Override
             public void handle(Event event) {
-                if(juegos){
+                if(juegos){   // quien lo sabe? 
                     lista = (new Registro("Juego.txt").getList());
                     String temp[];
                     int i=0;

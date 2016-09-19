@@ -27,7 +27,7 @@ public class Barra {
         this.color = color;
         barra = new Canvas(10,heigth);
         barra.setTranslateX(5);
-        barra.setTranslateY(450);
+        barra.setTranslateY(y);  //450
         this.desingBarra();
     }
     

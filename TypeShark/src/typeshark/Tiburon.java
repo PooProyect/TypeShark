@@ -63,7 +63,7 @@ public class Tiburon extends Pez {
                     //if(esLimite()) move(Constantes.DIMENSION_GAME_X+100,pez.getTranslateY());  // vuelve al inicio
                     if(esLimite()){ //setPezInVisible();
                         gana = true;
-                        move(Constantes.DIMENSION_GAME_X-100,pez.getTranslateY() ); // siempre se queda en el mismo getTranslateY()
+                        move(Constantes.DIMENSION_GAME_X+sleep/4,pez.getTranslateY() ); // siempre se queda en el mismo getTranslateY()
                     }
                 }
                 

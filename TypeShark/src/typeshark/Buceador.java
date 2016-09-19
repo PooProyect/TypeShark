@@ -14,12 +14,17 @@ import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.BorderPane;
 
-import javafx.scene.layout.HBox;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 
 /**
@@ -40,6 +45,7 @@ public class Buceador implements Runnable {
       private Label lPoints;
       private Barra barra;
        private int puntajeSpecial=1000;
+       private int nivel=0;
     public Buceador(){
         //aun no esta la imagen... 
         buceador= (new BuceadorG()).getBuceador();
@@ -65,10 +71,14 @@ public class Buceador implements Runnable {
     
     public Node getBarra(){
         Color color= Color.ALICEBLUE;
-        if(puntuacion<500)
+        if(puntuacion<1000)
             color = Color.BLUE;
-        if(puntuacion>=500 && puntuacion<1000) color = Color.YELLOW;
-        return (new Barra(450-puntuacion,puntuacion,color)).getBarra();    
+        if(puntuacion>=1000 && puntuacion<2000) color = Color.YELLOW;
+        if(puntuacion>=2000){
+            color = Color.RED;
+            special++;
+        }
+        return (new Barra(450-puntuacion/25,puntuacion/25,color)).getBarra();    
     }
     public void crearMonedas(){
         vida = new HBox();
@@ -88,7 +98,7 @@ public class Buceador implements Runnable {
         lPoints=new Label();
         status.getChildren().addAll(lPoints,lLife,lSpecial);
         status.setSpacing(50);
-        status.setAlignment(Pos.CENTER);
+        status.setAlignment(Pos.BOTTOM_CENTER);
         
         
         lLife.setText("Life "+getVidas());
@@ -99,7 +109,7 @@ public class Buceador implements Runnable {
      
          @Override
       public void run() {
-          while(vidas>0){
+          while(vidas>0 && !isFondo()){
           Platform.runLater(new Runnable(){
                   
             @Override
@@ -116,7 +126,8 @@ public class Buceador implements Runnable {
                        lLife.setText("Life "+getVidas());
                        tmp[cont]=i;
                        cont++;
-                   }if(getVidas()==0) break;
+                   }
+                   if(getVidas()==0 && isFondo()) break;
                }
            
                lPoints.setText("Puntaje "+getPunt());
@@ -136,6 +147,8 @@ public class Buceador implements Runnable {
         // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
      }
      }
+
+    
      
       private void obtenerSpecial(){
           if(puntuacion>puntajeSpecial){
@@ -175,6 +188,14 @@ public class Buceador implements Runnable {
 
     public void setPuntuacion(int puntuacion) {
         this.puntuacion = puntuacion;
+    }
+
+    public int getNivel() {
+        return nivel;
+    }
+
+    public void setNivel(int nivel) {
+        this.nivel = nivel;
     }
 
    
@@ -253,7 +274,7 @@ public class Buceador implements Runnable {
     }
     
     public boolean sinVidas(){
-        return this.getPunt() == 0;
+        return this.getVidas() == 0;
     }
     
     public void  restarSpecial(){

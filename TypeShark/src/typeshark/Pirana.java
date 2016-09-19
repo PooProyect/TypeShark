@@ -49,7 +49,7 @@ public class Pirana extends Pez{
                 public void run() {
                     move(pez.getTranslateX()-distancia,pez.getTranslateY()); if(esLimite()){ //setPezInVisible();
                         gana = true;
-                        move(Constantes.DIMENSION_GAME_X-100,pez.getTranslateY() );
+                        move(Constantes.DIMENSION_GAME_X-50,pez.getTranslateY() );
                     
                     }
                 }

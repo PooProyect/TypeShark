@@ -17,9 +17,14 @@ import util.files.*;
 import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.event.EventHandler;
+import javafx.scene.control.Button;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
+
 
 /**
  *
@@ -34,6 +39,7 @@ public class GameOrganizer extends Organizer{
     LinkedList<Pez> listPeces;      // aun no es útil 
     Registro registroPalabra, registroLetra;
     ArrayList palabras, letras;
+    Button info;
     
     public GameOrganizer(Buceador buceador, int time, int nivel) throws InterruptedException{
         root=new BorderPane();
@@ -49,6 +55,7 @@ public class GameOrganizer extends Organizer{
         
         root.getChildren().add(fondo.getFondoMarino());
         ((BorderPane) root).setLeft(this.buceador.getBuceador());
+        
         juego();
         type();
     }
@@ -87,7 +94,7 @@ public class GameOrganizer extends Organizer{
         LabelColor labelC;
         RunPeces runPeces;
         Thread hilo;
-        flow.setVgap(-10);
+        flow.setVgap(-32);
         flow.setMaxWidth(100);
         flow.setMaxHeight(100);
         int i=0;
@@ -114,20 +121,7 @@ public class GameOrganizer extends Organizer{
             hilo = new Thread(runPeces);
             hilo.start();
             i++;
-            if(j==0){
-                //HBox tmp = new HBox();
-                stack = new StackPane();                                
-                labelC = new LabelColor(getPalabra());
-                b = new Ballena(1500,300,(new BallenaG()).getBallena(),labelC,nivel);  // 1 Ballena
-                stack.setAlignment(Pos.CENTER);
-                stack.getChildren().addAll(b.getPez(),b.getLabel());
-                root.getChildren().add(stack);
-                listPeces.add(j+i,b);
-                runPeces = new RunPeces(b, j);
-                hilo = new Thread(runPeces);
-                hilo.start();
-                i++;
-            }
+            
             stack = new StackPane();
             labelC = new LabelColor(getLetra());
             p = new Pirana(500,0,(new PiranhaG()).getPiranha(),labelC,nivel);         // 2 Pirañas
@@ -138,6 +132,20 @@ public class GameOrganizer extends Organizer{
             runPeces = new RunPeces(p, j);
             hilo = new Thread(runPeces);
             hilo.start();
+            if(j==1){
+                //HBox tmp = new HBox();
+                stack = new StackPane();                                
+                labelC = new LabelColor(getPalabra());
+                b = new Ballena(600,0,(new BallenaG()).getBallena(),labelC,nivel);  // 1 Ballena
+                stack.setAlignment(Pos.CENTER);
+                stack.getChildren().addAll(b.getPez(),b.getLabel());
+                flow.getChildren().add(stack);
+                listPeces.add(j+i,b);
+                runPeces = new RunPeces(b, j);
+                hilo = new Thread(runPeces);
+                hilo.start();
+                i++;
+            }
         }
             ((BorderPane) root).setCenter(flow);
     }
@@ -174,7 +182,18 @@ public class GameOrganizer extends Organizer{
     private class Status implements Runnable{
         Status(){
             crearStatus();
-            
+            if(buceador.isFondo() || buceador.sinVidas()){
+                ((BorderPane) root).setBottom(info);
+                info.setOnMouseClicked(new EventHandler<MouseEvent>(){
+
+                @Override
+                public void handle(MouseEvent event) {
+                    root = (new InformacionOrganizer(buceador,nivel,false)).getRoot();   // true porque sí hay elementos q cargar en Juego 
+                    cambiarPantalla(event,Constantes.DIMENSION_SCENE_X,Constantes.DIMENSION_SCENE_Y);
+                    event.consume();
+                }
+            });
+            }
         }
         @Override
         public void run() {
@@ -182,14 +201,18 @@ public class GameOrganizer extends Organizer{
             while(buceador.getVidas()>0){
                 buceador.run();
             }
+            
         }
             
+        
         private void crearStatus(){
             buceador.crearStatus();
             buceador.crearMonedas();
-            ((BorderPane)root).setBottom(buceador.getStatus());
-            root.getChildren().add(buceador.getMonedas() ); 
+            ((BorderPane) root).setBottom(buceador.getStatus());
+            root.getChildren().addAll(buceador.getMonedas(),buceador.getBarra() ); 
         }
+        
+        
     }
     
     private class RunPeces implements Runnable{
@@ -204,7 +227,7 @@ public class GameOrganizer extends Organizer{
         public void run(){
             try {
                 if(pez.isTiburonNegro())      Thread.sleep(time*(factor+2));    // cada tiburon negro debería demorar un poco más en salir
-                else if(pez.isBallena())  Thread.sleep(time*(factor+5));
+                else if(pez.isBallena())  Thread.sleep(time*(factor+1));
                 else Thread.sleep(time*factor);
                 pez.run();
                 //if(pez.getGana()) buceador.restarVida();
@@ -235,6 +258,7 @@ public class GameOrganizer extends Organizer{
               if(!objetivo.getLabelColor().tieneLetras()){
                   tieneObjetivo=false;
                   buceador.añadirPuntaje(objetivo.getPuntaje());
+                  root.getChildren().add(buceador.getBarra() );
                   objetivo.move(500, objetivo.getY());
                   objetivo.getLabelColor().añadirLista(getLetra());
                  // objetivo.getLabelColor().colocarALista(getLetra());
@@ -287,12 +311,14 @@ public class GameOrganizer extends Organizer{
                     objetivo.getLabelColor().colorear();
                     if(!objetivo.getLabelColor().tieneLetras()){
                          buceador.añadirPuntaje(objetivo.getPuntaje());
+                         root.getChildren().add(buceador.getBarra() );
                          tieneObjetivo=false;
                          objetivo.move(500, objetivo.getY());
                          if(objetivo.esTNegro()){
                              objetivo.getLabelColor().añadirLista(getListPalabras());
                          }else if (objetivo.esBallena()){
                              objetivo.getLabelColor().añadirLista(getPalabra());//se usa el mismo listado de palabras, debido a que no tenemos el listado de ballena
+                             
                          }else{
                              objetivo.getLabelColor().añadirLista(getPalabra());
                          }
@@ -310,18 +336,18 @@ public class GameOrganizer extends Organizer{
         
     }
     private void type(){
-      /*  Platform.runLater(new Runnable(){
+        Platform.runLater(new Runnable(){
 
             @Override
-            public void run() {*/
+            public void run() {
                 root.requestFocus();
                 root.setOnKeyPressed(new KeyHandler());
 
 
 //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-           /* }
+           }
             
-        });*/
+        });
     }
  
         

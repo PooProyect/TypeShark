@@ -6,15 +6,10 @@
 package typeshark;
 
 import java.util.ArrayList;
-import javafx.application.Platform;
-import javafx.event.EventHandler;
-import javafx.event.EventType;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
 /**
@@ -53,7 +48,10 @@ public class LabelColor{
   
     }
  public boolean comparar(char c){
-        return label2.getText().trim().charAt(0)==c;
+     if(tieneLetras()){
+         return label2.getText().trim().charAt(0)==c;
+     }
+        return false;
         
        
     }

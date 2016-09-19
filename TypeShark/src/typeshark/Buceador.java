@@ -14,15 +14,12 @@ import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
-import javafx.event.Event;
-import javafx.event.EventHandler;
+
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 
 import javafx.scene.control.*;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.BorderPane;
+
 
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -44,7 +41,8 @@ public class Buceador implements Runnable {
       private Label lSpecial; 
       private Label lPoints;
       private Barra barra;
-       private int puntajeSpecial=1000;
+      boolean gano=false,siguienteLvl=false;
+     //  private int puntajeSpecial=1000;
        private int nivel=0;
     public Buceador(){
         //aun no esta la imagen... 
@@ -68,13 +66,14 @@ public class Buceador implements Runnable {
     public Node getMonedas(){
         return vida;
     }
-    
+    private int puntuacionMaxima=1000;
     public Node getBarra(){
         Color color= Color.ALICEBLUE;
-        if(puntuacion<1000)
+        if(puntuacion<puntuacionMaxima)
             color = Color.BLUE;
-        if(puntuacion>=1000 && puntuacion<2000) color = Color.YELLOW;
-        if(puntuacion>=2000){
+        if(puntuacion>=puntuacionMaxima&& puntuacion<puntuacionMaxima*2) color = Color.YELLOW;
+        if(puntuacion>=puntuacionMaxima*2){
+            puntuacionMaxima*=puntuacionMaxima;
             color = Color.RED;
             special++;
         }
@@ -118,6 +117,7 @@ public class Buceador implements Runnable {
                int tmp[]= {-1,-1};
                int cont=0;
                 move(buceador.getTranslateX()+0.5,buceador.getTranslateY()+2);
+                //System.out.println(""+buceador.getTranslateX());
                for(int i=0; i<listPeces.size();i++){
                    if(((Pez) listPeces.get(i)).getGana() ){  // entra en el mismo pez 
                        restarVida(); 
@@ -127,12 +127,18 @@ public class Buceador implements Runnable {
                        tmp[cont]=i;
                        cont++;
                    }
-                   if(getVidas()==0 && isFondo()) break;
+                   if(getVidas()==0 ){
+                       gano=true;
+                       break;
+                   }else if(isFondo()){
+                       siguienteLvl=true;
+                       break;
+                   }
                }
            
                lPoints.setText("Puntaje "+getPunt());
                lSpecial.setText("Special"+getSpecial());
-               obtenerSpecial();
+            //  obtenerSpecial();
                   
               }
           });
@@ -148,14 +154,19 @@ public class Buceador implements Runnable {
      }
      }
 
-    
+    public boolean siguienteLvl(){
+        return siguienteLvl;
+    };
+    public boolean gano(){
+        return gano;
+    }
      
-      private void obtenerSpecial(){
+     /* private void obtenerSpecial(){
           if(puntuacion>puntajeSpecial){
               special++;
               puntajeSpecial=(int)(puntajeSpecial*1.5);
           }
-      }
+      }*/
     public int getVidas(){
         return vidas;
     }

@@ -76,7 +76,7 @@ public class GameOrganizer extends Organizer{
     
     private ArrayList getListPalabras(){   // Lista de 2 o 3 Palabras para el Tiburon Negro
         ArrayList list = new ArrayList();
-        int n = 2+((int) (Math.random()*1));
+        int n = 2+((int) (Math.random()*2));
         for(int i=0; i<n; i++){
             list.add(getPalabra());
         }
@@ -198,9 +198,9 @@ public class GameOrganizer extends Organizer{
         @Override
         public void run() {
           //  System.out.print(buceador.getPunt());
-            while(buceador.getVidas()>0){
+           // while(buceador.getVidas()>0){
                 buceador.run();
-            }
+           // }
             
         }
             
@@ -250,7 +250,7 @@ public class GameOrganizer extends Organizer{
        
        while(i<listPeces.size()){
            
-           //se necesita un metodo que indique o asegure que esta dentro de la pantalla, para asi evitar que se tipeen los que estan fuera del scene
+          
            if(listPeces.get(i).getX()<=400&&listPeces.get(i).getLabelColor().comparar(c)){
               tieneObjetivo=true;
               objetivo=listPeces.get(i);
@@ -261,7 +261,7 @@ public class GameOrganizer extends Organizer{
                   root.getChildren().add(buceador.getBarra() );
                   objetivo.move(500, objetivo.getY());
                   objetivo.getLabelColor().añadirLista(getLetra());
-                 // objetivo.getLabelColor().colocarALista(getLetra());
+                
               }
               i=listPeces.size();
            }
@@ -294,7 +294,18 @@ public class GameOrganizer extends Organizer{
        }
        
    }
-   
+   private void eliminarPorBallena(){
+       int i=0;
+       while(i<listPeces.size()){
+           if(listPeces.get(i).getX()<400&&listPeces.get(i).esTNegro()){
+               listPeces.get(i).getLabelColor().añadirLista(getListPalabras());
+               listPeces.get(i).move(500, listPeces.get(i).getY());
+               
+           }
+           i++;
+       }
+               
+   }
     private class KeyHandler implements EventHandler<KeyEvent>{
 
         @Override
@@ -318,7 +329,7 @@ public class GameOrganizer extends Organizer{
                              objetivo.getLabelColor().añadirLista(getListPalabras());
                          }else if (objetivo.esBallena()){
                              objetivo.getLabelColor().añadirLista(getPalabra());//se usa el mismo listado de palabras, debido a que no tenemos el listado de ballena
-                             
+                             eliminarPorBallena();
                          }else{
                              objetivo.getLabelColor().añadirLista(getPalabra());
                          }

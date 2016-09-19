@@ -58,6 +58,7 @@ public class MenuOrganizer extends Organizer{
             juegosGuardados = new Button("Juegos\nGuardados");
             juegosGuardados.setAlignment(Pos.BOTTOM_CENTER);
             ((BorderPane) root).setLeft(juegosGuardados);
+            
             juegosGuardados.setOnMouseClicked(new EventHandler<MouseEvent>(){
 
                 @Override

@@ -39,6 +39,7 @@ public class Buceador implements Runnable {
       private Label lSpecial; 
       private Label lPoints;
       private Barra barra;
+       private int puntajeSpecial=1000;
     public Buceador(){
         //aun no esta la imagen... 
         buceador= (new BuceadorG()).getBuceador();
@@ -50,7 +51,10 @@ public class Buceador implements Runnable {
     }
   
     
-    
+    public boolean tieneSpecial(){
+        
+        return special>0;
+    }
     public Node getStatus(){
        return (Node)status; 
     }
@@ -117,6 +121,7 @@ public class Buceador implements Runnable {
            
                lPoints.setText("Puntaje "+getPunt());
                lSpecial.setText("Special"+getSpecial());
+               obtenerSpecial();
                   
               }
           });
@@ -131,7 +136,13 @@ public class Buceador implements Runnable {
         // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
      }
      }
-   
+     
+      private void obtenerSpecial(){
+          if(puntuacion>puntajeSpecial){
+              special++;
+              puntajeSpecial=(int)(puntajeSpecial*1.5);
+          }
+      }
     public int getVidas(){
         return vidas;
     }
@@ -245,6 +256,8 @@ public class Buceador implements Runnable {
         return this.getPunt() == 0;
     }
     
-    
+    public void  restarSpecial(){
+        special--;
+    }
     
 }

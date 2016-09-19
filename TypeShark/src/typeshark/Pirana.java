@@ -26,6 +26,7 @@ public class Pirana extends Pez{
     public Pirana(double xMove, double yMove,Node pez, LabelColor label,int nivel){
         super(pez,label,nivel);
         super.move(xMove, yMove);
+        isPiraña=true;
         sleep = 20-(5*nivel);
         puntaje = 50;
     }

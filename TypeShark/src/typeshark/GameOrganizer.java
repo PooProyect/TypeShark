@@ -18,6 +18,7 @@ import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.event.EventHandler;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
 /**
@@ -87,7 +88,8 @@ public class GameOrganizer extends Organizer{
         RunPeces runPeces;
         Thread hilo;
         flow.setVgap(-10);
-        flow.setMaxWidth(200);
+        flow.setMaxWidth(100);
+        flow.setMaxHeight(100);
         int i=0;
         for(int j=0; j<2;j++){      
             stack = new StackPane();
@@ -243,13 +245,42 @@ public class GameOrganizer extends Organizer{
        }
    }     
    
+   private void eliminarMasivamentePeces(){
+       int i=0;
+       while(i<listPeces.size()){
+           if(listPeces.get(i).getX()<=400){
+               listPeces.get(i).move(600, listPeces.get(i).getY());
+               if(listPeces.get(i).isPiraña){
+                   listPeces.get(i).getLabelColor().añadirLista(getLetra());
+               
+           }else if(listPeces.get(i).isTiburonNegro){
+               listPeces.get(i).getLabelColor().añadirLista(getListPalabras());
+           }else if(listPeces.get(i).esBallena()){
+               listPeces.get(i).getLabelColor().añadirLista(getPalabra());// desconocemos cual es la lista
+               listPeces.get(i).move(1500, listPeces.get(i).getY());
+               
+           }else
+           {
+             listPeces.get(i).getLabelColor().añadirLista(getPalabra()); 
+             
+           }
+              
+           }
+           i++;
+       }
+       
+   }
    
     private class KeyHandler implements EventHandler<KeyEvent>{
 
         @Override
        
         public void handle(KeyEvent t) {
-            if(!tieneObjetivo()){
+            if(buceador.tieneSpecial()&&t.getCode().equals(KeyCode.ENTER)){
+                buceador.restarSpecial();
+                eliminarMasivamentePeces();
+                tieneObjetivo=false;
+            }else if(!tieneObjetivo()){
                 buscarInicial(t.getText().charAt(0));
             }else{
                 if(objetivo.getLabelColor().comparar(t.getText().charAt(0))){
@@ -259,13 +290,12 @@ public class GameOrganizer extends Organizer{
                          tieneObjetivo=false;
                          objetivo.move(500, objetivo.getY());
                          if(objetivo.esTNegro()){
-                             objetivo.getLabelColor().anadirLista(getListPalabras());
+                             objetivo.getLabelColor().añadirLista(getListPalabras());
                          }else if (objetivo.esBallena()){
                              objetivo.getLabelColor().añadirLista(getPalabra());//se usa el mismo listado de palabras, debido a que no tenemos el listado de ballena
                          }else{
                              objetivo.getLabelColor().añadirLista(getPalabra());
                          }
-                         
                     }
                 }
            

@@ -20,7 +20,7 @@ public abstract class Pez implements Runnable{
     boolean gana;
     boolean isTiburonNegro=false;
     boolean isBallena=false;
-    
+    boolean isPiraña=false;
     public Pez(Node pez, LabelColor label, int nivel){    // todo Pez recibe un Node (en las clases hijas recibirá el node del canvas de cada dibujo)
         this.pez= pez;
         this.label = label;
@@ -110,5 +110,8 @@ public abstract class Pez implements Runnable{
    }
    public boolean esBallena(){
        return isBallena;
+   }
+   public boolean esPiraña(){
+       return isPiraña;
    }
 }

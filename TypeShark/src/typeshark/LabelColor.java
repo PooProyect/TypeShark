@@ -40,7 +40,7 @@ public class LabelColor{
       
         label1=new Label();
         label2=new Label(lista.get(0));
-        label2.setTextFill(Color.BLACK);
+        label2.setTextFill(Color.LAWNGREEN);
         label1.setTextFill(Color.ORANGE);
         contenedor.getChildren().addAll(label1,label2);
         contenedor.setAlignment(Pos.CENTER);
@@ -85,11 +85,12 @@ public class LabelColor{
         return label2.getText().trim().length()>0;
     }
      public void añadirLista(String c){
+         lista=new ArrayList();
          lista.add(c);
          llenarLabel();
     
 }
-     public void anadirLista(ArrayList<String> lista){
+     public void añadirLista(ArrayList<String> lista){
          this.lista=lista;
          llenarLabel();
      } 

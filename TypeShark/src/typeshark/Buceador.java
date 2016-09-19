@@ -41,7 +41,7 @@ public class Buceador implements Runnable {
       private Label lSpecial; 
       private Label lPoints;
       private Barra barra;
-      boolean gano=false,siguienteLvl=false;
+      boolean gano=true,siguienteLvl=false;
      //  private int puntajeSpecial=1000;
        private int nivel=0;
     public Buceador(){
@@ -128,7 +128,7 @@ public class Buceador implements Runnable {
                        cont++;
                    }
                    if(getVidas()==0 ){
-                       gano=true;
+                       gano=false;
                        break;
                    }else if(isFondo()){
                        siguienteLvl=true;

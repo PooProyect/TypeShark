@@ -198,9 +198,9 @@ public class GameOrganizer extends Organizer{
         @Override
         public void run() {
           //  System.out.print(buceador.getPunt());
-           // while(buceador.getVidas()>0){
+            while(buceador.getVidas()>0){
                 buceador.run();
-           // }
+           }
             
         }
             
